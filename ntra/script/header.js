@@ -95,7 +95,7 @@ export function Header(item) {
   dendros.setAttributeNS(null,"viewBox","0 0 24 24");
   const drawer = htm(ChevronsUp({class:"icon",id:"drawer"}),"main",{class:"menu"}),
   icon = drawer.firstElementChild,
-  img = htm(htm("","img",{src:`./cdn/media/img/PREVIEW_LOGO.png`,class:"blurry-load","data-large":`./cdn/media/img/logo_white.png`}),"div",{class:"header-img"}),
+  img = htm(htm("","img",{src:`./cdn/media/img/PREVIEW_LOGO.png`,class:"blurry-load","data-large":`./cdn/media/img/logo_white.PNG`}),"div",{class:"header-img"}),
   menutab = item[5].parentElement,
   socials = [Instagram({class:"icon",id:"instagram"}),Youtube({class:"icon",id:"youtube",stroke:"url(#gradi-yt)"}),dendros],
   //Link({class:"icon",id:"linktree"})
