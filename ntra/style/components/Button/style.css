@@ -1,0 +1,38 @@
+.button-text {
+  box-sizing: border-box;
+  transform: none;
+  font-size: 1.25em;
+  letter-spacing: 0.042em;
+  text-align: center;
+  color: rgb(0, 0, 0);
+  text-decoration-color: rgb(0, 0, 0);
+  text-decoration-style: solid;
+  text-decoration-thickness: auto;
+  font-weight: 400;
+  line-height: 1.5em;
+  background-color: rgb(255, 255, 255);
+}
+.button {
+  animation: 4s infinite glow;
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  text-decoration: none solid rgb(0, 0, 0);
+  display: block;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.133em;
+  padding: 0.5em 1em;
+  margin-bottom:1em;
+  margin-top:1em;
+  font-weight: 400;
+  text-align: center;
+  transition: all 0.3s ease 0s;
+  transform: none;
+  letter-spacing: normal;
+  line-height: 1em;
+  font-size: 0.667em;
+  border: 0.267em solid rgb(255, 255, 255);
+  transition: transform 1.28s ease-in-out;
+}
+.button:hover {
+  transform:scale(1.25);
+}

@@ -1,0 +1,100 @@
+.booking-form {
+  box-sizing: border-box;
+  border-radius: 0.375em;
+  color: rgb(255, 255, 255);
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  object-position: 50% 50%;
+  text-align: center;
+  white-space: normal;
+  font-weight: 300;
+  letter-spacing: normal;
+  text-decoration-color: rgb(255, 255, 255);
+  text-decoration-style: solid;
+  text-decoration-thickness: auto;
+  padding: 0 6vw;
+  font-size: 1em;
+}
+
+.booking-submit {
+  box-sizing: border-box;
+  background: none 0% 0% / auto repeat scroll padding-box border-box rgb(0, 0, 0);
+  font-size: 1em;
+  line-height: 1ch;
+  appearance: button;
+  color: rgb(255, 255, 255);
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  font-weight: 700;
+  letter-spacing: normal;
+  padding: .5em 1em;
+  cursor: pointer;
+  border-radius: .125em;
+  display: flex;
+  align-self: center;
+  box-shadow: rgba(0, 0, 0, 0.7) 0 .125em .125em 0, rgba(0, 0, 0, 0.2) 0em 0.2667em 0.4333em 0em, rgba(0, 0, 0, 0.2) 0em 0.6em 0.7667em 0em;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  text-decoration: none solid rgb(255, 255, 255);
+  transition: all 0.3s ease 0s;
+  width: 12em;
+  transform: none;
+  white-space: normal;
+  border: 0.25em solid rgb(255, 255, 255);
+}
+
+.booking-input {
+  box-sizing: border-box;
+  font-size: 1em;
+  line-height: 1ch;
+  padding: .5em;
+  color: rgb(80, 96, 111);
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  font-weight: 400;
+  letter-spacing: normal;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.1333em;
+  cursor: auto;
+  text-decoration: none solid rgb(80, 96, 111);
+  align-self: center;
+  box-shadow: rgba(72, 159, 221, 0.8) 0 0.05em 0.025em 0.05em, rgba(0, 0, 0, 0.01) 0em 0.007390233333em 0.014780500000em 0em, rgba(255, 255, 255, 0.157) 0em 0.029560966667em 0.022170733333em 0em, rgba(127, 127, 127, 0.043) 0em 0.059122em 0.096073em 0em, rgba(255, 255, 255, 0.043) 0em 0.133024333333em 0.169975666667em 0em;
+  min-width: 50%;
+  outline: rgb(80, 96, 111) none 0;
+  text-align: center;
+  transition: all 0.3s ease 0s;
+  white-space: normal;
+  margin-top: 0.5em;
+  margin-bottom: .5em;
+}
+
+.booking-message-text {
+  box-sizing: border-box;
+  font-size: 1em;
+  line-height: 2ch;
+  margin: .25em 4em !important;
+  color: rgb(0, 0, 0);
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  font-weight: 400;
+  letter-spacing: normal;
+  padding: .5em;
+  resize: vertical;
+  background-color: rgb(255, 255, 255);
+  border-radius: .125em;
+  cursor: auto;
+  text-decoration: none solid rgb(0, 0, 0);
+  align-self: center;
+  box-shadow: rgba(70, 156, 215, 0.686) 0 0.0125em 0.0375em 0.0425em, rgba(0, 0, 0, 0.02) 0em 0.011615133333em 0.023230266667em 0em, rgba(255, 255, 255, 0.243) 0em 0.046460666667em 0.034845333333em 0em, rgba(127, 127, 127, 0.07) 0em 0.092921em 0.150996666667em 0em, rgba(255, 255, 255, 0.07) 0em 0.209072333333em 0.267148em 0em;
+  min-height: 9ch;
+  min-width: 75%;
+  outline: rgb(0, 0, 0) none 0em;
+  transition: all 0.3s ease 0s;
+  text-align: start;
+  white-space: pre-wrap;
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}

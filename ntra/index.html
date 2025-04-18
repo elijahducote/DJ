@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8 />
+    <title>DJ EV MUSIC</title>
+  	<meta name=viewport content="width=device-width,initial-scale=1.0" />
+  	<link rel=icon type=image/png href=./cdn/media/ico/favicon-48x48.png sizes=48x48 />
+  	<link rel=icon type=image/svg+xml href=./cdn/media/ico/favicon.svg />
+  	<link rel="shortcut icon" href="./cdn/media/ico/favicon.ico" />
+  	<link rel=apple-touch-icon sizes=180x180 href=./cdn/media/ico/apple-touch-icon.png />
+  	<meta name="apple-mobile-web-app-title" content="DJ EV" />
+  	<link rel=manifest href=./cdn/media/ico/site.webmanifest />
+    <link rel=stylesheet type=text/css href=./cdn/css/ravel.css />
+   <script src="https://js.stripe.com/acacia/stripe.js"></script>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/filepond/dist/filepond.min.js"></script>
+
+    <!--<script src="https://cdn.jsdelivr.net/npm/@hcaptcha/vanilla-hcaptcha"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+  </head>
+<body>
+  <div class=container style=margin-bottom:0;margin-top:0;overflow-y:hidden>
+    <div class=wrapper style=margin-bottom:0;margin-top:0></div>
+    <div class=wrapper style=margin-bottom:0;margin-top:0></div>
+    <div class=wrapper style=margin-bottom:0;margin-top:0></div>
+    <div class=wrapper style=margin-bottom:0;margin-top:0></div>
+    <div class=wrapper style="margin-bottom:0;margin-top:0;display:flex;justify-content:center;align-items:center;position:relative;width:100vw;height:100vh;"></div>
+  </div>
+  <div id=nav-ux class=container style=margin-bottom:0;margin-top:0;z-index:6>
+    <div id=menu class=wrapper style=margin-bottom:0;margin-top:0></div>
+  </div>
+  <div class=container id=pdf-modal style="display:none;margin-bottom:0;margin-top:0;z-index:6">
+    <div class=wrapper id=pdf-viewer style="margin-bottom:0;margin-top:0;position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);"></div>
+  </div>
+  <div class=container style=margin-bottom:0;margin-top:0;background:transparent>
+    <div id="home" class=wrapper style="margin: 7.5em 0 0"></div>
+    <!--<div id="events" class=wrapper style="margin: 31.25vh 0 0"></div>-->
+    <div id="booking" class="wrapper" style="margin: 7.5em 0 0;padding:2em"></div>
+    <div id="playlists" class=wrapper style="margin: 7.5em 0 0"></div>
+    <div id="song-requests" class="wrapper" style="margin: 7.5em 0 0"></div>
+    <div id="payment" class="wrapper" style="margin: 7.5em 0 0;padding:2em"></div>
+  </div>
+  <svg style=visibility:hidden;opacity:0;width:0px;height:0px;border:none;margin:0px;padding:0px>
+    <defs>
+      <linearGradient id="gradi-ig" data-gradient-angle="45" x1="14.64%" y1="85.36%" x2="85.36%" y2="14.64%"><stop offset="0%" style="stop-color:#405de6;" /><stop offset="20%" style="stop-color:#5851db;" /><stop offset="40%" style="stop-color:#833ab4;" /><stop offset="60%" style="stop-color:#c13584;" /><stop offset="80%" style="stop-color:#e1306c;" /><stop offset="100%" style="stop-color:#fd1d1d;" /></linearGradient>
+     </defs>
+     <defs>
+       <linearGradient id="gradi-yt" data-gradient-angle="120" x1="6.7%" y1="25%" x2="93.30000000000001%" y2="75%"><stop offset="0%" style="stop-color: #ff0000;" /><stop offset="100%" style="stop-color: #282828;" /></linearGradient>
+     </defs>
+     <defs>
+       <linearGradient id="gradi-lnk" data-gradient-angle="27" x1="27.3%" y1="94.55%" x2="72.7%" y2="5.45%"><stop offset="0%" style="stop-color: #acdc5c;" /><stop offset="6.25%" style="stop-color: #acdb5c;" /><stop offset="12.5%" style="stop-color: #aad95b;" /><stop offset="18.75%" style="stop-color: #a8d45a;" /><stop offset="25%" style="stop-color: #a5ce59;" /><stop offset="31.25%" style="stop-color: #a2c757;" /><stop offset="37.5%" style="stop-color: #9dc055;" /><stop offset="43.75%" style="stop-color: #99b753;" /><stop offset="50%" style="stop-color: #94ae51;" /><stop offset="56.25%" style="stop-color: #8ea64f;" /><stop offset="62.5%" style="stop-color: #899e4d;" /><stop offset="68.75%" style="stop-color: #85964c;" /><stop offset="75%" style="stop-color: #80904a;" /><stop offset="81.25%" style="stop-color: #7d8b49;" /><stop offset="87.5%" style="stop-color: #7a8748;" /><stop offset="93.75%" style="stop-color: #798548;" /><stop offset="100%" style="stop-color: #788448;" /></linearGradient>
+     </defs>
+  </svg>
+  <svg style=visibility:hidden;opacity:0;width:0px;height:0px;border:none;margin:0px;padding:0px>
+    <defs>
+       <filter width="0" height="0" id="f1" x="0" y="0">
+         <feGaussianBlur in="SourceGraphic" stdDeviation="15" />
+       </filter>
+    </defs>
+  </svg>
+  <script src=./cdn/js/index.js></script>
+</body>
+</html>

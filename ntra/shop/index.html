@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang=en-US>
+
+<head>
+  <meta charset=UTF-8 />
+  <title>EvWave Shop</title>
+  <meta name=viewport content="width=device-width,initial-scale=1.0" />
+  <link rel=preconnect href=https://fonts.googleapis.com>
+  <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+  <link href=https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap rel=stylesheet>
+  <link href=https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&display=swap rel=stylesheet>
+  
+  <link rel=icon type=image/png href=./cdn/src/media/ico/favicon-48x48.png sizes=48x48 />
+  <link rel=icon type=image/svg+xml href=./cdn/src/media/ico/favicon.svg />
+  <link rel="shortcut icon" href="./cdn/ico/favicon.ico" />
+  <link rel=apple-touch-icon sizes=180x180 href=./cdn/src/media/ico/apple-touch-icon.png />
+  <meta name="apple-mobile-web-app-title" content="DJ EV" />
+  <link rel=manifest href=./cdn/src/media/ico/site.webmanifest />
+
+  <meta name=keywords content="storefront, appareal, designs, tees, custom prints" />
+</head>
+
+<body>
+  <style>
+     iframe {
+      min-width:100%;
+      height:auto;
+      margin:0px;
+      padding:0px;
+      border:none;
+      overflow:hidden;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Raleway", Helvetica, sans-serif !important;
+    }
+    body, html {
+      font-family: "Noto Sans", Helvetica, sans-serif !important;
+      width:100%;
+      height:100%;
+      margin:0px;
+      overflow-x:hidden;
+      padding:0px;
+      border:none;
+      background:#000;
+    }
+
+    #myShop {
+      min-width:100vw;
+      height:auto;
+    }
+  </style>
+  <div id=myShop></div>
+  <script>
+    var spread_shop_config = {
+      shopName: "evwave",
+      locale: "us_US",
+      prefix: "https://evwave.myspreadshop.com",
+      baseId: "myShop",
+      startToken:"dj+ev?collection=YwPNCCCyFs",
+      swipeMenu: true,
+      usePushState: true,
+      pushStateBaseUrl: "https://shop.djev.org/",
+      updateMetadata: false
+    }
+  </script>
+
+  <script type=text/javascript src=https://evwave.myspreadshop.com/shopfiles/shopclient/shopclient.nocache.js></script>
+</body>
+
+</html>
