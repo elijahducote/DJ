@@ -110,8 +110,6 @@ async function makePDF() {
   let bal = payform.elements["stripe-amount"].value.indexOf("US$ ");
   if (!bal) ++bal;
 
-  if (dayjs(payform.elements["datentime"].value, "YYYY-MM-DD HH:mm").isValid()) window.alert(date);
-
   const formatted = parseFloat(payform.elements["stripe-amount"].value.substring(bal*4).split(",").join("")),
   pdfBytes = await createPDF({
     date: dayjs().utc().tz("America/Lima").format("MM-DD-YYYY"),
