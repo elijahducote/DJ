@@ -337,7 +337,7 @@ export function Payment() {
                 "Content-Type": "multipart/form-data",
             },
           }).catch((resp) => {
-            window.alert(resp.data);
+            window.alert(resp.error);
           });
         }
         
