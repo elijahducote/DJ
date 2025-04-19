@@ -19,8 +19,10 @@ import { createPDF, closePDFModal, batchHide, batchShow } from "./service.js";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 import timezone from "dayjs/plugin/timezone.js";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(customParseFormat);
 dayjs.tz.setDefault("America/Lima");
 
 
@@ -100,6 +102,45 @@ paymentElement.on("change", function(e) {
   paymentType = e.value.type;
 });
 
+async function makePDF() {
+
+  const payform = document.getElementById("payment-form"),
+  date = dayjs(payform.elements["datentime"].value, "YYYY-MM-DD HH:mm").utc().tz("America/Lima"),
+  when = dayjs(date);
+  let bal = payform.elements["stripe-amount"].value.indexOf("US$ ");
+  if (!bal) ++bal;
+
+  if (dayjs(payform.elements["datentime"].value, "YYYY-MM-DD HH:mm").isValid()) window.alert(date);
+
+  const formatted = parseFloat(payform.elements["stripe-amount"].value.substring(bal*4).split(",").join("")),
+  pdfBytes = await createPDF({
+    date: dayjs().utc().tz("America/Lima").format("MM-DD-YYYY"),
+    djName: "Evan Ducote",
+    clientName: payform.elements["givenname"].value?.[0] || "[REDACTED]",
+    eventDate: date, 
+    startTime: when.format("h:mm A"), 
+    endTime: when.add(parseFloat(payform.elements["hoursoptions"].value?.[0] || "0"), "hour").format("h:mm A"),
+    venueName: payform.elements["placeof"].value?.[0] || "N/A",
+    venueAddress: payform.elements["location"].value?.[0] || "N/A",
+    eventType: payform.elements["eventtype"].value?.[0] || "N/A",
+    hours: payform.elements["hoursoptions"].value?.[0] || "N/A",
+    totalFee: formatted*2 || "N/A",
+    retainerAmount: formatted || "N/A",
+    balanceAmount: formatted || "N/A",
+    dueDate: date,
+    paymentMethod: paymentType.split("_").join(" ").toUpperCase(),
+    cancellationDays: "30",
+    setupHours: "1",
+    stateProvince: "Texas",
+    countyCity: "Houston-Galveston area"
+  },signaturePad),
+  blob = new Blob([pdfBytes], { type:"application/pdf"}),
+  url = URL.createObjectURL(blob);
+  document.getElementById("pdf-frame").src = url;
+  document.getElementById("pdf-modal").style.display = "block";
+  return blob;
+}
+
 export function Payment() {
   window.rqid = false;
   const captcha = htm(undefined,"h-captcha",{"auto-render":"true","id":"captcha","site-key":"e2480948-c1cc-4f46-ac56-81ea236a50c8","size":"compact","tabindex":"0"}),
@@ -138,9 +179,9 @@ export function Payment() {
           type: "hidden"
         },
         {
-          id: "given-name",
+          id: "givenname",
           type:"text",
-          name:"given-name",
+          name:"givenname",
           label: "Legal Name or Entity",
           placeholder: "Your Name or Company Name",
           required: true
@@ -179,9 +220,9 @@ export function Payment() {
           required: true
         },
         {
-          id: "hours-options",
+          id: "hoursoptions",
           type:"select",
-          name: "hours-options",
+          name: "hoursoptions",
           label: "Hours",
           enhance: true,
           multiple: false,
@@ -236,7 +277,7 @@ export function Payment() {
 
 
     window.addEventListener("load", function () {
-      batchHide(["given-name","eventtype","placeof","location","datentime","hours-options","preview-button","clear-button"]);
+      batchHide(["givenname","eventtype","placeof","location","datentime","hoursoptions","preview-button","clear-button"]);
 
 
       document.getElementById("payment-submit").disabled = 
@@ -254,34 +295,9 @@ export function Payment() {
       document.getElementById("clear-button").addEventListener("click", async () => {
         signaturePad.clear();
       });
-      document.getElementById("preview-button").addEventListener("click", async () => {
-        const pdfBytes = await createPDF({
-          date: dayjs().utc().tz("America/Lima").format("MM-DD-YYYY"),
-          djName: "Evan Ducote",
-          clientName: "John Doe", // 
-          eventDate: "2023-11-15", 
-          startTime: "18:00", 
-          endTime: "23:00",
-          venueName: "Grand Hall", //
-          venueAddress: "123 Party St, Celebration City", //
-          eventType: "Wedding", //
-          hours: "5", 
-          totalFee: "1000",
-          retainerAmount: "500",
-          balanceAmount: "500",
-          dueDate: "2023-11-10",
-          paymentMethod: paymentType.split("_").join(" ").toUpperCase(),
-          cancellationDays: "30",
-          setupHours: "1",
-          stateProvince: "Texas",
-          countyCity: "Houston-Galveston area"
-        },signaturePad);
-        const blob = new Blob([pdfBytes], { type:"application/pdf"});
-        const url = URL.createObjectURL(blob);
-        document.getElementById("pdf-frame").src = url;
-        document.getElementById("pdf-modal").style.display = "block";
-        document.getElementById("close-pdf").addEventListener("click", closePDFModal);
-      });
+      
+      document.getElementById("preview-button").addEventListener("click", makePDF);
+      document.getElementById("close-pdf").addEventListener("click", closePDFModal);
       //currency.setAttribute("pattern","^US\$ \d{1,3}(,\d{3})*(\.\d+)?$");
       currency.setAttribute("autofocus","");
       
@@ -310,6 +326,18 @@ export function Payment() {
         
         statusMsg.textContent = "Processing payment...";
         submitBtn.disabled = true;
+        
+        
+
+        if (document.getElementById("contract-toggle").checked) {
+          const inputData = new FormData(document.getElementById("payment-form"));
+          inputData.append("pdf",await makePDF(),"Contract.pdf");
+          await axios.post("/go/contract", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+          });
+        }
         
         let bal = money.indexOf("US$ ");
         if (!bal) ++bal;
@@ -387,7 +415,7 @@ export function Payment() {
     paymentForm.addEventListener("change",async()=>{
       if (document.getElementById("contract-toggle").checked) {
 
-        batchShow(["given-name","eventtype","placeof","location", "datentime","hours-options","preview-button","clear-button"]);
+        batchShow(["givenname","eventtype","placeof","location", "datentime","hoursoptions","preview-button","clear-button"]);
 
         if (document.getElementById("signature")) {
           batchShow(["signature","signature-label"]);
@@ -413,7 +441,7 @@ export function Payment() {
           maxWidth: 1.875,
           minDistance: 1.5
         });  
-      } else batchHide(["given-name","eventtype","placeof","location", "datentime","hours-options","preview-button","signature","signature-label","clear-button"]);
+      } else batchHide(["givenname","eventtype","placeof","location", "datentime","hoursoptions","preview-button","signature","signature-label","clear-button"]);
       /*function resizeCanvas() {
         ratio = Math.max(window.devicePixelRatio || 1, 1);
         canvas.width = canvas.offsetWidth * ratio;
