@@ -114,17 +114,17 @@ async function makePDF() {
   pdfBytes = await createPDF({
     date: dayjs().utc().tz("America/Lima").format("MM-DD-YYYY"),
     djName: "Evan Ducote",
-    clientName: payform.elements["givenname"].value?.[0] || "[REDACTED]",
+    clientName: payform.elements["givenname"].value ?? "[REDACTED]",
     eventDate: date, 
     startTime: when.format("h:mm A"), 
-    endTime: when.add(parseFloat(payform.elements["hoursoptions"].value?.[0] || "0"), "hour").format("h:mm A"),
-    venueName: payform.elements["placeof"].value?.[0] || "N/A",
-    venueAddress: payform.elements["location"].value?.[0] || "N/A",
-    eventType: payform.elements["eventtype"].value?.[0] || "N/A",
-    hours: payform.elements["hoursoptions"].value?.[0] || "N/A",
-    totalFee: formatted*2 || "N/A",
-    retainerAmount: formatted || "N/A",
-    balanceAmount: formatted || "N/A",
+    endTime: when.add(parseFloat(payform.elements["hoursoptions"].value ?? "0"), "hour").format("h:mm A"),
+    venueName: payform.elements["placeof"].value ?? "N/A",
+    venueAddress: payform.elements["location"].value ?? "N/A",
+    eventType: payform.elements["eventtype"].value ?? "N/A",
+    hours: payform.elements["hoursoptions"].value ?? "N/A",
+    totalFee: formatted*2 ?? "N/A",
+    retainerAmount: formatted ?? "N/A",
+    balanceAmount: formatted ?? "N/A",
     dueDate: date,
     paymentMethod: paymentType.split("_").join(" ").toUpperCase(),
     cancellationDays: "30",
@@ -132,10 +132,7 @@ async function makePDF() {
     stateProvince: "Texas",
     countyCity: "Houston-Galveston area"
   },signaturePad),
-  blob = new Blob([pdfBytes], { type:"application/pdf"}),
-  url = URL.createObjectURL(blob);
-  document.getElementById("pdf-frame").src = url;
-  document.getElementById("pdf-modal").style.display = "block";
+  blob = new Blob([pdfBytes], { type:"application/pdf"});
   return blob;
 }
 
@@ -280,7 +277,7 @@ export function Payment() {
 
       document.getElementById("payment-submit").disabled = 
       true;
-      document.getElementById("payment-form").classList.add("pure-form","pure-form-stacked");
+      
       
       
       const form = document.getElementById("payment-form"),
@@ -288,13 +285,19 @@ export function Payment() {
       currency = document.getElementById("stripe-amount"),
       pdfviewer = htm([htm("Close","button",{id:"close-pdf"}),htm(undefined,"iframe",{id:"pdf-frame",style:"width:100%; height:90%"})],"div",{style:"position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);width:100%;height:100%;background:white"});
 
+
+      form.classList.add("pure-form","pure-form-stacked");
+      form.enctype = "multipart/form-data";
       van.add(document.getElementById("pdf-viewer"),pdfviewer);
 
       document.getElementById("clear-button").addEventListener("click", async () => {
         signaturePad.clear();
       });
       
-      document.getElementById("preview-button").addEventListener("click", makePDF);
+      document.getElementById("preview-button").addEventListener("click", async () => {
+        document.getElementById("pdf-frame").src = URL.createObjectURL(await makePDF());
+        document.getElementById("pdf-modal").style.display = "block";
+      });
       document.getElementById("close-pdf").addEventListener("click", closePDFModal);
       //currency.setAttribute("pattern","^US\$ \d{1,3}(,\d{3})*(\.\d+)?$");
       currency.setAttribute("autofocus","");
@@ -328,14 +331,15 @@ export function Payment() {
         
 
         if (document.getElementById("contract-toggle").checked) {
-          const inputData = new FormData(document.getElementById("payment-form"));
-          inputData.append("pdf",await makePDF(),"Contract.pdf");
-          let resp = await axios.post("/go/contract", inputData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
+          const inputData = new FormData(document.getElementById("payment-form")),
+          file = new File([await makePDF()], "contract.pdf", {type:"application/pdf"});
+          inputData.append("file",file);
+          window.alert(inputData);
+          const resp = await fetch("/go/contract", {
+            method: "POST",
+            body: inputData
           });
-          window.alert(resp);
+          window.alert(JSON.stringify(resp));
         }
         
         let bal = money.indexOf("US$ ");

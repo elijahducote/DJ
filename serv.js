@@ -6,12 +6,13 @@ import {
   print,
   runCmd,
   sendHTMLResponse
-} from "./xter/lib/ntry.js";
+} from "./xter/djev/lib/ntry.js";
 
 // Functions
-import {flyerUpdate} from "./xter/flyer-update/func.js";
-import {createIntent} from "./xter/create-intent/func.js";
-import {message} from "./xter/message/func.js";
+//import {flyerUpdate} from "./xter/djev/flyer-update/func.js";
+//import {createIntent} from "./xter/djev/create-intent/func.js";
+//import {message} from "./xter/djev/message/func.js";
+import {contract} from "./xter/djev/contract/func.js";
 
 // Network
 import { Hono } from "hono";
@@ -39,20 +40,10 @@ app.get(
   })
 );
 
-app.get(
-  "/go/flyer-update",
-  wrapper(flyerUpdate, "HONO")
-);
-
 app.post(
- "/go/create-intent",
- wrapper(createIntent, "HONO")
-);
-
-app.post(
- "/go/message",
- wrapper(message, "HONO")
-).get(wrapper(message,"HONO"));
+ "/go/contract",
+ wrapper(contract, "HONO")
+).get(wrapper(contract,"HONO"));
 
 // Serve static files for non-/cdn/* paths
 app.use("*", async (c, next) => {

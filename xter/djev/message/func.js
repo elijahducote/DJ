@@ -1,6 +1,6 @@
-import {checkValues,tabulateList,report,sendHTMLResponse} from "../lib/utility.js";
+import {checkValues,tabulateList,report,sendHTMLResponse} from "../../../lib/utility.js";
 import Stripe from "stripe";
-const stripe = Stripe(process.env.STRIPE_SK,{apiVersion:"2025-02-24.acacia"});
+const stripe = Stripe(Deno.env.get("STRIPE_SK"),{apiVersion:"2025-02-24.acacia"});
 
 export async function message(body) {
   try {
@@ -11,7 +11,7 @@ export async function message(body) {
     if (token) report(`Got token: ${token}`,log);
     else report("Did not receive token.",log,false);
     
-    params.append("secret", process.env.HCAPTCHA_SECRET);
+    params.append("secret", Deno.env.HCAPTCHA_SECRET);
     params.append("response", token);
     
     await axios.post("https://api.hcaptcha.com/siteverify", params).then((resp) => {

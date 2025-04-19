@@ -3,7 +3,7 @@ import axios from "axios";
 const axiosInstance = axios.create({
   baseURL:"https://api.github.com/repos/elijahducote/DJEv",
   headers: {
-    "Authorization": `Bearer ${process.env.GITHUB_TOKEN}`,
+    "Authorization": `Bearer ${Deno.env.get("GITHUB_TOKEN")}`,
     "Accept": "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28"
   }
@@ -111,7 +111,7 @@ exports.handler = async function updater(event, context) {
         username_or_id_or_url: "_djev_"
       },
       headers: {
-        "x-rapidapi-key": process.env.RAPIDAPI_KEY,
+        "x-rapidapi-key": Deno.env.get("RAPIDAPI_KEY"),
         "x-rapidapi-host": "instagram-scraper-api2.p.rapidapi.com"
       }
     }),

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {checkValues,tabulateList,report,sendHTMLResponse} from "../lib/utility.js";
+import {checkValues,tabulateList,report,sendHTMLResponse} from "../../../lib/utility.js";
 
 export async function important () {
   let log = [];
@@ -7,7 +7,7 @@ export async function important () {
     const gh = axios.create({
       baseURL: "https://api.github.com/repos/elijahducote/trifectshow",
       headers: {
-        "Authorization": `Bearer ${process.env.GIT}`,
+        "Authorization": `Bearer ${Deno.env.get("GIT")}`,
         "Accept": "application/vnd.github.object+json,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
         "X-GitHub-Api-Version": "2022-11-28",

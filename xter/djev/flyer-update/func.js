@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import {checkValues,tabulateList,report,sendHTMLResponse} from "../lib/utility.js";
+import {checkValues,tabulateList,report,sendHTMLResponse} from "../../../lib/utility.js";
 
 // DayJS
 import dayjs from "dayjs";
@@ -33,9 +33,9 @@ async function getImageAsBase64(imageUrl) {
 async function updateMultipleFiles(files) {
   try {
     const gh = axios.create({
-      baseURL:"https://api.github.com/repos/elijahducote/DJEv",
+      baseURL:"https://api.github.com/repos/elijahducote/DJ",
       headers: {
-        "Authorization": `Bearer ${process.env.GITHUB_TOKEN}`,
+        "Authorization": `Bearer ${Deno.env.get("GITHUB_TOKEN")}`,
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28"
       }
@@ -114,9 +114,9 @@ async function updateFlyers (captions) {
   let log = [];
   try {
     const gh = axios.create({
-      baseURL:"https://api.github.com/repos/elijahducote/DJEv",
+      baseURL:"https://api.github.com/repos/elijahducote/DJ",
       headers: {
-        "Authorization": `Bearer ${process.env.GITHUB_TOKEN}`,
+        "Authorization": `Bearer ${Deno.env.get("GITHUB_TOKEN")}`,
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28"
       }
