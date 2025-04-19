@@ -336,9 +336,8 @@ export function Payment() {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
-          }).catch((resp) => {
-            window.alert(resp.error);
           });
+          window.alert(resp);
         }
         
         let bal = money.indexOf("US$ ");
