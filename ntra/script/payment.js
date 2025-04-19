@@ -332,11 +332,12 @@ export function Payment() {
         if (document.getElementById("contract-toggle").checked) {
           const inputData = new FormData(document.getElementById("payment-form"));
           inputData.append("pdf",await makePDF(),"Contract.pdf");
-          await axios.post("/go/contract", formData, {
+          let resp = await axios.post("/go/contract", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
           });
+          window.alert(resp.data);
         }
         
         let bal = money.indexOf("US$ ");
