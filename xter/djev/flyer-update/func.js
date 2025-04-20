@@ -35,7 +35,7 @@ async function updateMultipleFiles(files) {
     const gh = axios.create({
       baseURL:"https://api.github.com/repos/elijahducote/DJ",
       headers: {
-        "Authorization": `Bearer ${Deno.env.get("GITHUB_TOKEN")}`,
+        "Authorization": `Bearer ${process.env.GITHUB_TOKEN}`,
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28"
       }
@@ -116,7 +116,7 @@ async function updateFlyers (captions) {
     const gh = axios.create({
       baseURL:"https://api.github.com/repos/elijahducote/DJ",
       headers: {
-        "Authorization": `Bearer ${Deno.env.get("GITHUB_TOKEN")}`,
+        "Authorization": `Bearer ${process.env.GITHUB_TOKEN}`,
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28"
       }
@@ -186,7 +186,7 @@ export async function flyerUpdate() {
     options = {
       headers: {
         "x-rapidapi-host": "save-insta1.p.rapidapi.com",
-        "x-rapidapi-key": "def3d41743msh26e2dad9df3f033p10eeb4jsn25e2449eaeef",
+        "x-rapidapi-key": "40e82884e3msh4daf8915a723745p1675c7jsn0d210687a2bb",
         "Content-Type": "application/json"
       },
       responseType: "json",

@@ -51,30 +51,40 @@ export function wrapper(func,type) {
     }
     if (type === "HONO") {
       let body;
-      const mainType = args[0].req.header("Content-Type").split(';')[0].trim();
-      switch (mainType) {
-        case "application/x-www-form-urlencoded":
-          body = await args[0].req.parseBody();
-          break;
-        case "application/json":
-          body = await args[0].req.json();
-          break;
-        case "multipart/form-data":
-          if (args[0].req.raw.body instanceof ReadableStream) {
-            // Convert ReadableStream to a Node.js Readable stream
-            const bodyStream = Readable.fromWeb(args[0].req.raw.body);
-            body = await streamToBuffer(bodyStream);
-          } else body = Buffer.from(args[0].req.raw.body, isBase64(args[0].req.raw.body) ? "base64" : "utf8");
-          const { fields, files } = await parseFormData(body, args[0].req.header("Content-Type"));
-          body = {fields, files};
-          break;
+      const contentTypeHeader = args[0].req.header("Content-Type");
+      
+      // Check if Content-Type header exists before trying to use it
+      if (contentTypeHeader) {
+        const mainType = contentTypeHeader.split(';')[0].trim();
+        
+        switch (mainType) {
+          case "application/x-www-form-urlencoded":
+            body = await args[0].req.parseBody();
+            break;
+          case "application/json":
+            body = await args[0].req.json();
+            break;
+          case "multipart/form-data":
+            // Existing multipart/form-data handling...
+            if (args[0].req.raw.body instanceof ReadableStream) {
+              const bodyStream = Readable.fromWeb(args[0].req.raw.body);
+              body = await streamToBuffer(bodyStream);
+            } else body = Buffer.from(args[0].req.raw.body, isBase64(args[0].req.raw.body) ? "base64" : "utf8");
+            const { fields, files } = await parseFormData(body, contentTypeHeader);
+            body = {fields, files};
+            break;
+        }
       }
+      
+      // If body is still undefined, get query parameters
       if (body === undefined) body = args[0].req.query();
+      
       const resp = await func(body);
       print(JSON.stringify(resp));
-      //print(JSON.stringify(body));
+      
+      // Send JSON response back as a string
       if (resp.type === "application/json") resp.msg = JSON.stringify(resp.msg);
-
+    
       return args[0].body(resp.msg, resp.code,
       {
         "Content-Type": resp.type
