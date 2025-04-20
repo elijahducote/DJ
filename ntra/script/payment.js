@@ -328,7 +328,10 @@ export function Payment() {
         statusMsg.textContent = "Processing payment...";
         submitBtn.disabled = true;
         
-        
+        paymentfillout.validate();
+        if (window.rqid && paymentfillout.isValid()) {
+          paymentfillout.getField("token").setValue(window.rqid);
+        }
 
         if (document.getElementById("contract-toggle").checked) {
           const inputData = new FormData(document.getElementById("payment-form")),
