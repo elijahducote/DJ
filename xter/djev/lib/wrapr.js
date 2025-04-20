@@ -51,11 +51,11 @@ export function wrapper(func,type) {
     }
     if (type === "HONO") {
       let body;
-      const contentTypeHeader = args[0].req.header("Content-Type");
+      const headers = args[0].req.header(); // returns lowercase headers
       
       // Check if Content-Type header exists before trying to use it
-      if (contentTypeHeader) {
-        const mainType = contentTypeHeader.split(';')[0].trim();
+      if (headers["content-type"]) {
+        const mainType = headers["content-type"].split(';')[0].trim();
         
         switch (mainType) {
           case "application/x-www-form-urlencoded":
@@ -70,7 +70,7 @@ export function wrapper(func,type) {
               const bodyStream = Readable.fromWeb(args[0].req.raw.body);
               body = await streamToBuffer(bodyStream);
             } else body = Buffer.from(args[0].req.raw.body, isBase64(args[0].req.raw.body) ? "base64" : "utf8");
-            const { fields, files } = await parseFormData(body, contentTypeHeader);
+            const { fields, files } = await parseFormData(body, headers["content-type"]);
             body = {fields, files};
             break;
         }
@@ -80,7 +80,7 @@ export function wrapper(func,type) {
       if (body === undefined) body = args[0].req.query();
       
       const resp = await func(body);
-      print(JSON.stringify(resp));
+      print(resp);
       
       // Send JSON response back as a string
       if (resp.type === "application/json") resp.msg = JSON.stringify(resp.msg);
