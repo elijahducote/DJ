@@ -114,17 +114,17 @@ async function makePDF() {
   pdfBytes = await createPDF({
     date: dayjs().utc().tz("America/Lima").format("MM-DD-YYYY"),
     djName: "Evan Ducote",
-    clientName: payform.elements["givenname"].value || "[REDACTED]",
+    clientName: payform.elements["givenname"].value ?? "[REDACTED]",
     eventDate: date, 
     startTime: when.format("h:mm A"), 
-    endTime: when.add(parseFloat(payform.elements["hoursoptions"].value || "0"), "hour").format("h:mm A"),
-    venueName: payform.elements["placeof"].value || "N/A",
-    venueAddress: payform.elements["location"].value || "N/A",
-    eventType: payform.elements["eventtype"].value || "N/A",
-    hours: payform.elements["hoursoptions"].value || "N/A",
-    totalFee: formatted*2 || "N/A",
-    retainerAmount: formatted || "N/A",
-    balanceAmount: formatted || "N/A",
+    endTime: when.add(parseFloat(payform.elements["hoursoptions"].value ?? "0"), "hour").format("h:mm A"),
+    venueName: payform.elements["placeof"].value ?? "N/A",
+    venueAddress: payform.elements["location"].value ?? "N/A",
+    eventType: payform.elements["eventtype"].value ?? "N/A",
+    hours: payform.elements["hoursoptions"].value ?? "N/A",
+    totalFee: formatted*2 ?? "N/A",
+    retainerAmount: formatted ?? "N/A",
+    balanceAmount: formatted ?? "N/A",
     dueDate: date,
     paymentMethod: paymentType.split("_").join(" ").toUpperCase(),
     cancellationDays: "30",
@@ -328,21 +328,16 @@ export function Payment() {
         statusMsg.textContent = "Processing payment...";
         submitBtn.disabled = true;
         
-        paymentfillout.validate();
-        if (window.rqid && paymentfillout.isValid()) {
-          paymentfillout.getField("token").setValue(window.rqid);
-        }
+        
 
         if (document.getElementById("contract-toggle").checked) {
           const inputData = new FormData(document.getElementById("payment-form")),
           file = new File([await makePDF()], "contract.pdf", {type:"application/pdf"});
           inputData.append("file",file);
-          window.alert(inputData);
           const resp = await fetch("/go/contract", {
             method: "POST",
             body: inputData
           });
-          window.alert(JSON.stringify(resp));
         }
         
         let bal = money.indexOf("US$ ");
