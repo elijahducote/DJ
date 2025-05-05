@@ -226,6 +226,26 @@ main svg#drawer {
 main svg#drawer:hover {
   transform: rotate(3.14rad);
 }
+
+.aloft {
+  animation: pointUp 1.28s ease-out infinite;
+  animation-play-state: running !important;
+  opacity:1 !important;
+  transition:none !important;
+}
+.aloft:hover {
+  transform:none !important;
+}
+
+.aloft-b {
+  animation-play-state: paused !important;
+  transition:none !important;
+}
+.aloft-b:hover {
+  animation-play-state: paused !important;
+  transform:none !important;
+}
+
 main svg#instagram {
   fill:url("#gradi-ig") !important;
   /*padding:4.375em;*/
@@ -278,6 +298,19 @@ main svg#linktree {
   border-radius:2em;
 }
 
+@keyframes pointUp {
+  25% {
+    transform: translateY(-0.375em);
+  }
+
+  50% {
+    transform: translateY(0.375em);
+  }
+
+  0%, 100% {
+    transform: translateY(-0.0em);
+  }
+}
 @keyframes rt {
   100% {
     transform: rotate(360deg);
@@ -289,7 +322,7 @@ main svg#linktree {
   }
 }
 .fadeAway {
-  animation: fadeout ease-out 0.56s  0.56s 1 paused;
+  animation: fadeout ease-out 0.56s 1 paused;
   position:relative;
   top:4.375em;
   width:2.5em;
@@ -367,7 +400,7 @@ main.social-instagram, main.social-youtube, main.social-linktree {
   right:3.125em;
 }
 
-div#home, div#booking, div#playlists {
+div#home, div#booking, div#playlists, div#payment, div#song-requests {
   transition: opacity 0.56s ease-in;
   opacity:0;
   display:none;
@@ -388,7 +421,7 @@ div#home, div#booking, div#playlists {
 #captcha {
 width:100%;
 transform-origin:center;
-margin: 2em 0 2em 0;
+margin: 1.5em 0 1.5em 0;
 display: inline-block;
 }
 .booking-submit {
@@ -527,7 +560,6 @@ input, textarea {
 	padding: 0 !important;
 	display: inline !important;
   margin: 1em 1em;
-
 }
 .toggle-slider {
  inset: auto !important;
@@ -596,7 +628,7 @@ input {
   text-align: center !important;
 }
 #captcha {
-  padding: 2em 0 1em 0;
+  padding: 1.5em 0 1em 0;
 }
 @media(min-width: 1363px) {
   #captcha {

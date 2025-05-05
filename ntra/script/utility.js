@@ -3,6 +3,22 @@ let oldGross,
 intentSecret,
 intentInterval;
 
+export function capCase (string) {
+  const letter = string.charCodeAt(0);
+  if (letter < 91 && letter > 64) return string;
+  const capletter = String.fromCharCode(letter - 32),
+  nth = string.length;
+  let novastr = capletter,
+  itR8 = nth,
+  cur;
+  for (;itR8;--itR8) {
+    cur = nth - itR8;
+    if (!cur) continue;
+    novastr = novastr + string[nth - itR8];
+  }
+  return novastr;
+}
+
 export function Dbounce(func, delay) {
   let timeout;
   return function() {

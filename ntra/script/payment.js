@@ -1,4 +1,5 @@
 import {htm} from "./utility";
+import van from "vanjs-core";
 
 
 // Stripe
@@ -136,9 +137,9 @@ async function makePDF() {
   return blob;
 }
 
-export function Payment() {
+export default function Payment() {
   window.rqid = false;
-  const captcha = htm(undefined,"h-captcha",{"auto-render":"true","id":"captcha","site-key":"e2480948-c1cc-4f46-ac56-81ea236a50c8","size":"compact","tabindex":"0"}),
+  const captcha = htm(undefined,"h-captcha",{"auto-render":"true","id":"captcha","site-key":"e2480948-c1cc-4f46-ac56-81ea236a50c8","size":"compact","tabindex":"0","theme":"dark"}),
   paymentForm = htm(undefined, "div");
   
   captcha.addEventListener("verified", function (e) {
@@ -268,7 +269,7 @@ export function Payment() {
 
     window.addEventListener("load", function () {
       batchHide(["givenname","eventtype","placeof","location","datentime","hoursoptions","preview-button","clear-button"]);
-
+      
 
       document.getElementById("payment-submit").disabled = 
       true;
@@ -305,14 +306,25 @@ export function Payment() {
             formatCurrency(this, "blur");
       });
 
-      van.add(form.childNodes[form.childNodes.length - 3],htm(undefined,"br"));
-      van.add(form.childNodes[form.childNodes.length - 4],pay);
-      van.add(form.childNodes[form.childNodes.length - 4],captcha);
-      van.add(form.childNodes[form.childNodes.length - 2],htm(undefined,"div",{id:"payment-message"}));      
+      van.add(form.children[form.children.length - 3],htm(undefined,"br"));
+      van.add(form.children[form.children.length - 4],captcha);
+      van.add(form.children[form.children.length - 2],htm(undefined,"div",{id:"payment-message"}));      
       van.add(form.children[form.children.length-2],htm(undefined,"br"));
 
+      van.add(form,pay);
+      form.insertBefore(pay,document.getElementById("payment-submit").parentNode);
       paymentElement.mount(pay);
+      
+      paymentElement.on("ready", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
 
+
+      batchHide(["givenname","eventtype","placeof","location","datentime","hoursoptions","preview-button","clear-button"]);
+      
       document.getElementById("payment-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         // elements on the page
@@ -409,7 +421,7 @@ export function Payment() {
         if (confirmError) statusMsg.textContent = confirmError;*/
         handleServerResponse(msg,stripe);
       });
-    });
+    },{once:true});
 
 
     paymentForm.addEventListener("change",async()=>{

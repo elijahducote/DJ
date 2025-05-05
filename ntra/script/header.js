@@ -1,11 +1,32 @@
 import van from "vanjs-core";
 import {list, reactive} from "vanjs-ext";
 import {ChevronsUp,Instagram,Youtube,Link} from "vanjs-feather";
-import {htm,Dbounce,throttle,sleep} from "./utility.js";
+import {htm,Dbounce,throttle,sleep,capCase} from "./utility.js";
 
 var itR8R = 0,
 isScrolling,
 isCancelled = false;
+
+
+export function updateNavIcons(pathSwap) {
+  let currentPath = window.location.pathname.substring(1) || "home";
+  const navIcons = document.querySelectorAll(".letter-icon");
+
+  if (pathSwap) currentPath = pathSwap;
+  
+  navIcons.forEach(icon => {
+    const parentSection = icon.parentElement,
+    dataLink = parentSection.dataset.link || "/",
+    normalizedLink = dataLink === "/" ? "home" : dataLink;
+    if (normalizedLink === currentPath) {
+      icon.style.opacity = "1.0"; // Active icon
+      icon.style.filter = "grayscale(0%)"; // Full color
+    } else {
+      icon.style.opacity = "0.5"; // Inactive icon
+      icon.style.filter = "grayscale(100%)"; // Greyed out
+    }
+  });
+}
 
 function TopNav(nav) {
   itR8R = 0;
@@ -13,19 +34,30 @@ function TopNav(nav) {
   return list(nav,reactive(["ome", "ooking","laylists","erch","ervice"]),function (v) {
     let offset = ".75em";
     if (!itR8R) offset = "0";
-    let path = ["home","booking","playlists",undefined,"payment"][itR8R],
+    let path = ["/","booking","playlists","merch","payment"][itR8R],
     section = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section","data-link":path, style:`user-select: none;`});
     if (itR8R === 3) {
-      let a = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section"});
+      let a = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section","data-link":"merch"});
       
-      a.addEventListener("touchend",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
-      a.addEventListener("click",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
+      a.addEventListener("touchend",() => {
+        updateNavIcons("merch");
+        window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener")
+      });
+      a.addEventListener("click",() => {
+        updateNavIcons("merch");
+        window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener")
+      });
+
       //van.add(contents,htm(undefined,"br"));
       ++itR8R;
       return a;
     }
     section.addEventListener("click", function() {
-      window.router.goto(this.dataset.link);
+      if (window.isNavigating) return;
+      //exit.dispatchEvent(window.docContact);
+      if (this.dataset.link.charCodeAt(0) === 47) history.pushState({ page: "home" }, "Home", "/");
+      else history.pushState({ page: this.dataset.link }, capCase(this.dataset.link), `/${this.dataset.link}`);
+      window.dispatchEvent(window.docState);
     });
     ++itR8R;
     //van.add(wrapper[5],htm([htm("test","span"),v],"h2"));
@@ -60,16 +92,18 @@ function Menu(dropdown) {
       
       a.addEventListener("touchend",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
       a.addEventListener("click",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
+
       van.add(contents,htm(undefined,"br"));
       ++itR8R;
       return a;
     }
-    let path = ["home","booking","playlists",undefined,"payment"][itR8R],
+    let path = ["/","booking","playlists","merch","payment"][itR8R],
     section = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{"data-link":path, style:`margin: ${offset} 0 0; user-select: none;`});
     section.addEventListener("click", function() {
-      const clickEvent = new Event("click");
-      exit.dispatchEvent(clickEvent);
-      window.router.goto(this.dataset.link);
+      exit.dispatchEvent(window.docContact);
+      if (this.dataset.link.charCodeAt(0) === 47) history.pushState({ page: "home" }, "Home", "/");
+      else history.pushState({ page: this.dataset.link }, capCase(this.dataset.link), `/${this.dataset.link}`);
+      window.dispatchEvent(window.docState);
     });
     ++itR8R;
     //van.add(wrapper[5],htm([htm("test","span"),v],"h2"));
@@ -103,7 +137,6 @@ export function Header(item) {
   socials[0].children[0].style.stroke = "none";
   socials[1].children[1].style.stroke = "#FFFFFF";
   
-
   icon.children[0].setAttributeNS(null,"pointer-events","none");
   icon.children[1].setAttributeNS(null,"pointer-events","none");
 
@@ -135,13 +168,14 @@ export function Header(item) {
   }*/
   
   async function collapser() {
+    if (window.isNavigating) return;
     if (isCancelled) {
       console.log("Transition End","\n");
       isCancelled = false;
       return;
     }
     Object.assign(menutab.style, {display:"initial",visibility:"visible"});
-    await sleep(200);
+    await sleep(100);
     menutab.style.opacity = "1";
   }
 
@@ -156,21 +190,69 @@ export function Header(item) {
       setTimeout(hideNSeek,4000);
     }, 800), {once:true});
   }, 800), false);*/
- 
-  drawer.addEventListener("touchend", () => {
-      console.log("Enteredd","\n");
-      drawer.addEventListener("transitionend",collapser,{once:true});
+
+  
+  drawer.addEventListener("click", (e) => {
+    console.log("Entered","\n");
+
+    if (e.target.classList.contains("aloft")) {
+      
+      e.target.addEventListener("mouseout", (e) => {
+        e.target.classList.remove("aloft-b");
+      },{once:true});
+
+      e.target.addEventListener("touchend", (e) => {
+        e.target.classList.remove("aloft-b");
+      },{once:true});
+
+      e.target.classList.add("aloft-b");
+
+      document.getElementsByClassName("container")[3].scrollTo(
+      {
+        top: 0,
+        behavior: "smooth"
+      });
+      return;
+    }
+      
+    e.target.addEventListener("transitionend",collapser,{once:true});
   });
+
+  drawer.addEventListener("touchend", (e) => {
+    console.log("Entered","\n");
+    
+
+    if (e.target.classList.contains("aloft")) {
+
+      /*e.target.addEventListener("touchend", (e) => {
+        console.log("aa");
+        e.target.classList.remove("aloft-b");
+      },{once:true});*/
+
+      e.target.classList.add("aloft-b");
+      setTimeout(()=> {
+        document.getElementById("drawer").removeEventListener("transitionend");
+        document.getElementById("drawer").classList.remove("aloft-b");
+      },1000);
+
+      document.getElementsByClassName("container")[3].scrollTo(
+      {
+        top: 0,
+        behavior: "smooth"
+      });
+      return;
+    }
+    
+    e.target.addEventListener("transitionend",collapser,{once:true});
+  });
+
 
   drawer.addEventListener("transitioncancel", () => {
     isCancelled = true;
     console.log("Cancelled","\n");
   });
-  drawer.addEventListener("mouseenter", () => {
-    if (menutab.style.opacity !== "1") {
-      console.log("Entered","\n");
-      drawer.addEventListener("transitionend",collapser,{once:true});
-    }
+  drawer.addEventListener("mouseenter", (e) => {
+    if (menutab.style.opacity !== "1") e.target.addEventListener("transitionend",collapser,{once:true});
   });
 
   van.add(img,drawer);

@@ -410,12 +410,23 @@ export function batchHide(items) {
       elm.required = false;
       elm.disabled = true;
       elm = document.getElementById(items[cur] + "_container");
+      if (!elm) continue;
+      elm.style.setProperty("display","none","important");
+      elm.style.setProperty("visiblity","hidden","important");
+      elm.style.setProperty("opacity","0","important");
+      continue;
     }
-    if (elm.nodeName === "BUTTON") elm.disabled = true;
+    if (elm.nodeName === "BUTTON") {
+      elm.disabled = true;
+      elm.style.setProperty("display","none","important");
+      elm.style.setProperty("visiblity","hidden","important");
+      elm.style.setProperty("opacity","0","important");
+      continue;
+    }
     if (!elm) continue;
-    elm.style.setProperty("display","none","important");
-    elm.style.setProperty("visiblity","hidden","important");
-    elm.style.setProperty("opacity","1","important");
+    elm.parentElement.style.setProperty("display","none","important");
+    elm.parentElement.style.setProperty("visiblity","hidden","important");
+    elm.parentElement.style.setProperty("opacity","0","important");
     // elm.style.setProperty("user-select","none","important");
     //elm.style.setProperty("pointer-events","none","important");
     //elm.style.setProperty("touch-action","none","important");
@@ -433,12 +444,23 @@ export function batchShow(items) {
       elm.required = true;
       elm.disabled = false;
       elm = document.getElementById(items[cur] + "_container");
+      if (!elm) continue;
+      elm.style.setProperty("display","revert","important");
+      elm.style.setProperty("visiblity","visible","important");
+      elm.style.setProperty("opacity","1","important");
+      continue;
     }
-    if (elm.nodeName === "BUTTON") elm.disabled = false;
+    if (elm.nodeName === "BUTTON") {
+      elm.disabled = false;
+      elm.style.setProperty("display","revert","important");
+      elm.style.setProperty("visiblity","visible","important");
+      elm.style.setProperty("opacity","1","important");
+      continue;
+    }
     if (!elm) continue;
-    elm.style.setProperty("display","revert","important");
-    elm.style.setProperty("visiblity","visible","important");
-    elm.style.setProperty("opacity","1","important");
+    elm.parentElement.style.setProperty("display","revert","important");
+    elm.parentElement.style.setProperty("visiblity","visible","important");
+    elm.parentElement.style.setProperty("opacity","1","important");
     //  elm.style.setProperty("user-select","initial","important");
     // elm.style.setProperty("pointer-events","initial","important");
     // elm.style.setProperty("touch-action","initial","important");

@@ -1,7 +1,61 @@
 import {htm} from "./utility";
 
-export function Playlists() {
+export default function Playlists() {
   return htm([
+    
+    htm("Alternative",
+      "h2"
+    ),
+        
+    htm(undefined,
+      "div",
+      {
+        class: "home-separator"
+      }
+    ),
+        
+    htm(undefined,
+      "br"
+    ),
+    
+    htm(htm(undefined,"iframe",{src: "https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F1946144887&show_artwork=true&show_comments=false&secret_token=s-bSvcXntVHjs",style: "width: 175%; height: 100%; position: absolute; border: 0px;",allowfullscreen:"",scrolling: "no"}),
+    
+    "div",
+      {
+       style: "width: 36%; height:16em; position: relative;"
+      }
+    ),
+    
+    htm(undefined,
+      "br"
+    ),
+    
+    htm("Pop",
+      "h2"
+    ),
+        
+    htm(undefined,
+      "div",
+      {
+        class: "home-separator"
+      }
+    ),
+        
+    htm(undefined,
+      "br"
+    ),
+    
+    htm(htm(undefined,"iframe",{src: "https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F1986353964&show_artwork=true&show_comments=false&secret_token=s-mJUIl9SwEG1",style: "width: 175%; height: 100%; position: absolute; border: 0px;",allowfullscreen:"",scrolling: "no"}),
+    
+    "div",
+      {
+       style: "width: 36%; height:16em; position: relative;"
+      }
+    ),
+    
+    htm(undefined,
+      "br"
+    ),
     
     htm("Open Format Mix",
       "h2"

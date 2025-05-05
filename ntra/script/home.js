@@ -1,5 +1,4 @@
 import {htm} from "./utility";
-import {goto} from "./vanjs-router";
 import { RoundCarousel, RoundCarouselItem } from "round-carousel-component";
 import jsonObject from "../src/important.json";
 
@@ -13,7 +12,7 @@ function getFontSizeInEm(element) {
 
 
 
-export function Home() {
+export default function Home () {
   const cta = htm(htm("Book Us","span",{class:"button-text"}),
     "button",
     {
@@ -43,7 +42,8 @@ export function Home() {
   },8000);
 
   cta.addEventListener("click",function() {
-    goto("booking");
+    history.pushState({ page: 'booking' }, "Booking", "/booking");
+    window.dispatchEvent(window.docState);
   });
 
   return htm([
@@ -73,10 +73,6 @@ export function Home() {
       }
     ),*/
 
-    htm(undefined,
-      "br"
-    ),
-
     htm("About",
       "span",
       {
@@ -92,7 +88,7 @@ export function Home() {
 
     ),
 
-    htm("DJ Ev spins Chill Lo-Fi - Chillwave, Chillhop, Lo-Fi-house, Funk-soul, & open format.",
+    htm("Ev spins chill lofi, funk/soul & more…",
       "span",
       {
         class: "home-description"

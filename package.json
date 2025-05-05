@@ -4,8 +4,8 @@
   "main": "serv.js",
   "type": "module",
   "scripts": {
-    "build": "esbuild ./ntra/script/*.js --keep-names --drop:debugger --pure:console.log --tree-shaking=true --legal-comments=none --charset=utf8 --format=iife --bundle --platform=browser --minify --target=chrome131,safari18.2,edge131,firefox133,opera115 --outdir=./ntra/src/js/ && esbuild ./ntra/ravel.css --loader:.css=css --loader:.ttf=file --tree-shaking=true --legal-comments=none --charset=utf8 --bundle --platform=browser --minify --target=chrome131,safari18.2,edge131,firefox133,opera115 --outfile=./ntra/src/css/ravel.css",
-    "dev": "node -r dotenv/config --env-file=.env serv.js"
+    "build": "esbuild ./ntra/script/*.js --keep-names --drop:debugger --tree-shaking=true --legal-comments=none --charset=utf8 --format=iife --bundle --platform=browser --minify --target=chrome131,safari18.2,edge131,firefox133,opera115 --outdir=./ntra/src/js/ && esbuild ./ntra/ravel.css --loader:.css=css --loader:.ttf=file --tree-shaking=true --legal-comments=none --charset=utf8 --bundle --platform=browser --minify --target=chrome131,safari18.2,edge131,firefox133,opera115 --outfile=./ntra/src/css/ravel.css",
+    "dev": "node -r dotenv/config serv.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +28,7 @@
     "round-carousel-component": "^1.2.1",
     "signature_pad": "^5.0.7",
     "stripe": "^17.7.0",
+    "universal-router": "^9.2.1",
     "vanjs-core": "^1.5.3",
     "vanjs-ext": "^0.6.2",
     "vanjs-feather": "^0.0.5"

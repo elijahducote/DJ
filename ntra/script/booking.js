@@ -1,13 +1,14 @@
 import {htm} from "./utility";
+import van from "vanjs-core";
 import "@hcaptcha/vanilla-hcaptcha";
 import { Form } from "@forms.js/core";
 import axios from "axios";
 
 let fillout;
 
-export function Booking() {
+export default function Booking() {
   window.rqid = false;
-  const captcha = htm(undefined,"h-captcha",{"auto-render":"true","id":"captcha","site-key":"e2480948-c1cc-4f46-ac56-81ea236a50c8","size":"compact","tabindex":"0"}),
+  const captcha = htm(undefined,"h-captcha",{"auto-render":"true","id":"captcha","site-key":"e2480948-c1cc-4f46-ac56-81ea236a50c8","size":"compact","tabindex":"0","theme":"dark"}),
   bookingForm = htm(undefined, "div");
   
   captcha.addEventListener("verified", function (e) {
@@ -119,8 +120,12 @@ export function Booking() {
           placeholder: "Choose as many from the selection.",
           optionsList: [
             {
-              value: "Top 40",
-              label: "Top 40",
+              value: "Open Format",
+              label: "Open Format",
+            },
+            {
+              value: "Lo-Fi",
+              label: "Lo-Fi",
             },
             {
               value: "Pop",
@@ -139,10 +144,6 @@ export function Booking() {
               label: "Hip-Hop/Rap",
             },
             {
-              value: "Country",
-              label: "Country",
-            },
-            {
               value: "Disco",
               label: "Disco",
             },
@@ -155,12 +156,8 @@ export function Booking() {
               label: "Motown",
             },
             {
-              value: "Classical",
-              label: "Classical",
-            },
-            {
-              value: "Alternative",
-              label: "Alternative",
+              value: "Indie",
+              label: "Indie",
             },
             {
               value: "Jazz",
@@ -206,6 +203,13 @@ export function Booking() {
           type: "hidden"
         },
         {
+          id: "subscribe-toggle",
+          type:"checkbox",
+          label: "Subscribe?",
+          toggle: true
+          //className:"pure-checkbox"
+        },
+        {
           id: "submit-button",
           type: "button",
           buttonType:"submit",
@@ -230,9 +234,17 @@ export function Booking() {
       document.getElementById("submit-button").disabled = true;
       document.getElementById("form").setAttribute("enctype","multipart/form-data");
       document.getElementById("form").classList.add("pure-form","pure-form-stacked");
-      document.getElementById("form").addEventListener("submit", (e) => {
+      document.getElementById("form").addEventListener("submit", async (e) => {
         e.preventDefault();
         fillout.validate();
+        if (document.getElementById("subscribe-toggle").checked) {
+          const inputData = new FormData(document.getElementById("form"));
+          inputData.append("htoken", window.rqid);
+          const resp = await fetch("/go/subscribe", {
+            method: "POST",
+            body: inputData
+          });
+        }
         if (window.rqid && fillout.isValid()) {
           fillout.getField("token").setValue(window.rqid);
           e.currentTarget.submit();

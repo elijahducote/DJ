@@ -2,10 +2,11 @@ import {htm} from "./utility";
 import "@hcaptcha/vanilla-hcaptcha";
 import { Form } from "@forms.js/core";
 import axios from "axios";
+import van from "vanjs-core";
 
 let inputform;
 
-export function Requests() {
+export default function Requests() {
   window.rqid = false;
   const captcha = htm(undefined,"h-captcha",{"auto-render":"true","id":"captcha","site-key":"e2480948-c1cc-4f46-ac56-81ea236a50c8","size":"compact","tabindex":"0"}),
   requestForm = htm(undefined, "div");
