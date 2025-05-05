@@ -10,7 +10,7 @@ isCancelled = false;
 
 export function updateNavIcons(pathSwap) {
   let currentPath = window.location.pathname.substring(1) || "home";
-  const navIcons = document.querySelectorAll(".letter-icon");
+  const navIcons = document.querySelectorAll("h2.nav-top-section .letter-icon");
 
   if (pathSwap) currentPath = pathSwap;
   
