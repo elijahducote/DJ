@@ -231,7 +231,7 @@ export function Header(item) {
 
       e.target.classList.add("aloft-b");
       setTimeout(()=> {
-        document.getElementById("drawer").removeEventListener("transitionend");
+        //document.getElementById("drawer").removeEventListener("transitionend");
         document.getElementById("drawer").classList.remove("aloft-b");
       },1000);
 
