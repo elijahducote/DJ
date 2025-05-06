@@ -256,18 +256,25 @@ main svg#instagram {
   top:4.375em;
   padding:0px;
   position:relative;
-  transition: transform 0.56s ease-in-out;
+  /*transition: transform 0.56s ease-in-out;*/
   z-index:6;
 }
 main svg#instagram:hover, main svg#youtube:hover, main svg#linktree:hover {
-  transform:scale(1.25);
+  animation: enlarge 0.56s ease-in alternate both 2;
+}
+@keyframes enlarge {
+  0% {
+    transform: none;
+  }
+  100% {
+    transform:scale(1.25);
+  }
 }
 main svg#youtube {
   fill:url("#gradi-yt") !important;
   top:4.375em;
   padding:0px;
   position:relative;
-  transition: transform 0.56s ease-in-out;
 }
 main svg#linktree {
   fill:url("#gradi-lnk") !important;
@@ -277,7 +284,6 @@ main svg#linktree {
   left:2.5em;
   padding:0px;
   position:relative;
-  transition: transform 0.56s ease-in-out;
   /*padding-left:2em;*/
 }
 .instagram-link {

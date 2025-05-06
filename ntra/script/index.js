@@ -53,7 +53,6 @@ var lastVisited = window.location.pathname.substring(1) || "home",
 hasBrowsedMostContent = false,
 transitionStage = [false,false,false];
 
-
 wrapper[1].firstElementChild.addEventListener("transitionstart",function(e){
   if (hasBrowsedMostContent) transitionStage[0] = true;
   else return;
@@ -74,7 +73,6 @@ wrapper[3].firstElementChild.addEventListener("transitionstart",function(e){
   e.target.style.setProperty("display","revert","important");
   e.target.style.setProperty("visiblity","visible","important");
 });
-
 
 wrapper[1].firstElementChild.addEventListener("transitionend",function(e){
   if (hasBrowsedMostContent) transitionStage[0] = false;
