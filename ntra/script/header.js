@@ -196,6 +196,8 @@ export function Header(item) {
     console.log("Entered","\n");
 
     if (e.target.classList.contains("aloft")) {
+
+      e.target.classList.add("aloft-b");
       
       e.target.addEventListener("mouseout", (e) => {
         e.target.classList.remove("aloft-b");
@@ -205,7 +207,6 @@ export function Header(item) {
         e.target.classList.remove("aloft-b");
       },{once:true});
 
-      e.target.classList.add("aloft-b");
 
       document.getElementsByClassName("container")[3].scrollTo(
       {

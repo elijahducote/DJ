@@ -43,14 +43,59 @@ routes = [{
 router = new Router(routes),
 blurryLoader = new BlurryImageLoad();
 
+
 window.isNavigating = false;
 window.docState = new Event("popstate");
 window.docContact = new Event("click");
 window.docLoad = new Event("load");
 
-var lastVisited = window.location.pathname.substring(1) || "home";
-
+var lastVisited = window.location.pathname.substring(1) || "home",
+hasBrowsedMostContent = false,
 transitionStage = [false,false,false];
+
+
+wrapper[1].firstElementChild.addEventListener("transitionstart",function(e){
+  if (hasBrowsedMostContent) transitionStage[0] = true;
+  else return;
+  e.target.style.setProperty("display","revert","important");
+  e.target.style.setProperty("visiblity","visible","important");
+});
+
+wrapper[2].firstElementChild.addEventListener("transitionstart",function(e){
+  if (hasBrowsedMostContent) transitionStage[1] = true;
+  else return;
+  e.target.style.setProperty("display","revert","important");
+  e.target.style.setProperty("visiblity","visible","important");
+});
+
+wrapper[3].firstElementChild.addEventListener("transitionstart",function(e){
+  if (hasBrowsedMostContent) transitionStage[2] = true;
+  else return;
+  e.target.style.setProperty("display","revert","important");
+  e.target.style.setProperty("visiblity","visible","important");
+});
+
+
+wrapper[1].firstElementChild.addEventListener("transitionend",function(e){
+  if (hasBrowsedMostContent) transitionStage[0] = false;
+  else return;
+  e.target.style.setProperty("display","none","important");
+  e.target.style.setProperty("visiblity","hidden","important");
+});
+  
+wrapper[2].firstElementChild.addEventListener("transitionend",function(e){
+  if (hasBrowsedMostContent) transitionStage[1] = false;
+  else return;
+  e.target.style.setProperty("display","none","important");
+  e.target.style.setProperty("visiblity","hidden","important");
+});
+  
+wrapper[3].firstElementChild.addEventListener("transitionend",function(e){
+  if (hasBrowsedMostContent) transitionStage[2] = false;
+  else return;
+  e.target.style.setProperty("display","none","important");
+  e.target.style.setProperty("visiblity","hidden","important");
+});
 
 van.add(app,siteHeader);
 
@@ -99,11 +144,12 @@ function locate() {
         wrapper[2].firstElementChild.style.opacity = "1.0";
         wrapper[3].firstElementChild.style.opacity = "1.0";
         window.dispatchEvent(window.docLoad);
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
         window.isNavigating = false;
+        document.getElementsByClassName("container")[3].scrollTo(
+        {
+            top: 0,
+            behavior: "smooth"
+        });
       },{once:true});
       blurryLoader.load();
     },{once:true});
@@ -114,88 +160,41 @@ function locate() {
 }
 
 async function fadeMenu(valU) {
-  const percentage = Math.round(valU * 100),
-  arrow = document.getElementById("drawer");
+  const percentage = Math.round(valU * 100);
+  
+  if (percentage < 50) {
+    hasBrowsedMostContent = true;
+    document.getElementById("drawer").classList.toggle("aloft");
 
-  if (percentage < 75) {
-    if (arrow.classList.contains("aloft")) return;
-    arrow.classList.add("aloft");
-    
-    wrapper[1].firstElementChild.addEventListener("transitionend",function(){
-      transitionStage[0] = false;
-      this.style.setProperty("display","none","important");
-      this.style.setProperty("visiblity","hidden","important");
-      this.style.setProperty("opacity","0","important");
-    },{once:true});
-
-    wrapper[2].firstElementChild.addEventListener("transitionend",function(){
-      transitionStage[1] = false;
-      this.style.setProperty("display","none","important");
-      this.style.setProperty("visiblity","hidden","important");
-      this.style.setProperty("opacity","0","important");
-    },{once:true});
-
-    wrapper[3].firstElementChild.addEventListener("transitionend",function(){
-      transitionStage[2] = false;
-      this.style.setProperty("display","none","important");
-      this.style.setProperty("visiblity","hidden","important");
-      this.style.setProperty("opacity","0","important");
-    },{once:true});
+    wrapper[1].firstElementChild.style.setProperty("display","revert","important");
+    wrapper[1].firstElementChild.style.setProperty("visiblity","visible","important");
+    wrapper[2].firstElementChild.style.setProperty("display","revert","important");
+    wrapper[2].firstElementChild.style.setProperty("visiblity","visible","important");
+    wrapper[3].firstElementChild.style.setProperty("display","revert","important");
+    wrapper[3].firstElementChild.style.setProperty("visiblity","visible","important");
 
 
-    await sleep(200);
-    wrapper[1].firstElementChild.addEventListener("transitionstart",function(){
-      transitionStage[0] = true;
-    },{once:true});
 
-    wrapper[2].firstElementChild.addEventListener("transitionstart",function(){
-      transitionStage[1] = true;
-    },{once:true});
+    await sleep(100);
 
-    wrapper[3].firstElementChild.addEventListener("transitionstart",function(){
-      transitionStage[2] = true;
-    },{once:true});
     wrapper[1].firstElementChild.style.setProperty("opacity","0","important");
     wrapper[2].firstElementChild.style.setProperty("opacity","0","important");
     wrapper[3].firstElementChild.style.setProperty("opacity","0","important");
   }
   else {
-    if (!arrow.classList.contains("aloft")) return;
-    arrow.classList.remove("aloft");
-
-    wrapper[1].firstElementChild.addEventListener("transitionend",function(e){
-      transitionStage[0] = false;
-    },{once:true});
-
-    wrapper[2].firstElementChild.addEventListener("transitionend",function(e){
-      transitionStage[1] = false;
-    },{once:true});
-
-    wrapper[3].firstElementChild.addEventListener("transitionend",function(e){
-      transitionStage[2] = false;
-    },{once:true});
+    hasBrowsedMostContent = false;
+    document.getElementById("drawer").classList.toggle("aloft");
 
     wrapper[1].firstElementChild.style.setProperty("display","revert","important");
     wrapper[1].firstElementChild.style.setProperty("visiblity","visible","important");
-
     wrapper[2].firstElementChild.style.setProperty("display","revert","important");
     wrapper[2].firstElementChild.style.setProperty("visiblity","visible","important");
-
     wrapper[3].firstElementChild.style.setProperty("display","revert","important");
     wrapper[3].firstElementChild.style.setProperty("visiblity","visible","important");
 
-    await sleep(200);
-    wrapper[1].firstElementChild.addEventListener("transitionstart",function(e){
-      transitionStage[0] = true;
-    },{once:true});
 
-    wrapper[2].firstElementChild.addEventListener("transitionstart",function(e){
-      transitionStage[1] = true;
-    },{once:true});
+    await sleep(100);
 
-    wrapper[3].firstElementChild.addEventListener("transitionstart",function(e){
-      transitionStage[2] = true;
-    },{once:true});
     wrapper[1].firstElementChild.style.setProperty("opacity","1","important");
     wrapper[2].firstElementChild.style.setProperty("opacity","1","important");
     wrapper[3].firstElementChild.style.setProperty("opacity","1","important");

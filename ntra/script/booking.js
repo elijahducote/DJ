@@ -247,7 +247,7 @@ export default function Booking() {
         }
         if (window.rqid && fillout.isValid()) {
           fillout.getField("token").setValue(window.rqid);
-          e.currentTarget.submit();
+          document.getElementById("form").submit();
         }
       });
       let offspring = document.getElementById("form").childNodes;
