@@ -173,7 +173,7 @@ async function fadeMenu(valU) {
 
 
 
-    await sleep(100);
+    //await sleep(100);
 
     wrapper[1].firstElementChild.style.setProperty("opacity","0","important");
     wrapper[2].firstElementChild.style.setProperty("opacity","0","important");
@@ -191,7 +191,7 @@ async function fadeMenu(valU) {
     wrapper[3].firstElementChild.style.setProperty("visiblity","visible","important");
 
 
-    await sleep(100);
+    //await sleep(100);
 
     wrapper[1].firstElementChild.style.setProperty("opacity","1","important");
     wrapper[2].firstElementChild.style.setProperty("opacity","1","important");
@@ -200,7 +200,6 @@ async function fadeMenu(valU) {
 }
 
 document.getElementsByClassName("container")[3].addEventListener("scrollend", throttle(function() {
-  console.log("Tesg");
   const elm = document.getElementsByClassName("container")[3];
   let height = elm.scrollTop / (elm.scrollHeight - elm.clientHeight);
 

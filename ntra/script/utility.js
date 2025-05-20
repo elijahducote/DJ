@@ -120,44 +120,60 @@ function calculateGrossAmount(netAmount) {
 export function formatCurrency(input, blur) {
     // appends $ to value, validates decimal side
     // and puts cursor back in right position.
+    
     // don't validate empty input
     if (input.value === "") return;
+    
     // get input value
-    var input_val = input.value,
-    newVal = parseFloat(input_val.substring(4)),
-    grossNew = calculateGrossAmount(newVal);
-    if (blur === "blur") {
-    if (oldGross !== newVal) {
-      input_val = "US$ " + grossNew.toString();
-      oldGross = grossNew;
-    }
-    else return;
+    var input_val = input.value;
+    
+    // Remove "US$ " prefix for calculations if it exists
+    if (input_val.startsWith("US$ ")) {
+        input_val = input_val.substring(4);
     }
     
+    // Remove any commas for proper parsing
+    var parsed_val = input_val.replace(/,/g, "");
+    var newVal = parseFloat(parsed_val);
+    var grossNew = calculateGrossAmount(newVal);
+    
+    if (blur === "blur") {
+        if (!oldGross || oldGross !== newVal) {
+            input_val = grossNew.toString();
+            oldGross = grossNew;
+        }
+        else return;
+    } else {
+        // If not on blur, keep the current input value for formatting
+        input_val = parsed_val;
+    }
     
     // original length
-    var original_len = input_val.length,
+    var original_len = input.value.length;
     // initial caret position 
-    caret_pos = input.selectionStart;
+    var caret_pos = input.selectionStart;
 
     // check for decimal
     if (input_val.indexOf(".") >= 0) {
         // get position of first decimal
         // this prevents multiple decimals from
         // being entered
-        var decimal_pos = input_val.indexOf("."),
+        var decimal_pos = input_val.indexOf(".");
         // split number by decimal point
-        left_side = input_val.substring(0, decimal_pos),
-        right_side = input_val.substring(decimal_pos);
+        var left_side = input_val.substring(0, decimal_pos);
+        var right_side = input_val.substring(decimal_pos + 1);
 
         // add commas to left side of number
         left_side = formatNumber(left_side);
 
         // validate right side
-        right_side = formatNumber(right_side);
+        right_side = right_side.replace(/\D/g, "");
 
         // On blur make sure 2 numbers after decimal
-        if (blur === "blur") right_side += "00";
+        if (blur === "blur") {
+            right_side += "00";
+            right_side = right_side.substring(0, 2);
+        }
 
         // Limit decimal to only 2 digits
         right_side = right_side.substring(0, 2);
@@ -173,12 +189,13 @@ export function formatCurrency(input, blur) {
         input_val = "US$ " + input_val;
         
         // final formatting
-        if (blur === "blur" && input_val.length === 4) input_val += "0.50";
+        if (blur === "blur" && input_val === "US$ ") input_val += "0.50";
         else if (blur === "blur") input_val += ".00";
     }
 
     // send updated string to input
     input.value = input_val;
+    
     // put caret back in the right position
     var updated_len = input_val.length;
     caret_pos = updated_len - original_len + caret_pos;

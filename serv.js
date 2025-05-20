@@ -22,7 +22,7 @@ import { serveStatic } from "@hono/node-server/serve-static";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 
-// Init
+// Initialization
 const app = new Hono(),
 workingDir = dirname(fileURLToPath(import.meta.url)),
 publicDir = join(workingDir, "ntra"),
