@@ -160,9 +160,11 @@ function locate() {
 async function fadeMenu(valU) {
   const percentage = Math.round(valU * 100);
   
+  hasBrowsedMostContent = true;
+  
   if (percentage < 50) {
     hasBrowsedMostContent = true;
-    document.getElementById("drawer").classList.toggle("aloft");
+    document.getElementById("drawer").classList.add("aloft");
 
     wrapper[1].firstElementChild.style.setProperty("display","revert","important");
     wrapper[1].firstElementChild.style.setProperty("visiblity","visible","important");
@@ -173,7 +175,7 @@ async function fadeMenu(valU) {
 
 
 
-    //await sleep(100);
+    await sleep(100);
 
     wrapper[1].firstElementChild.style.setProperty("opacity","0","important");
     wrapper[2].firstElementChild.style.setProperty("opacity","0","important");
@@ -181,7 +183,7 @@ async function fadeMenu(valU) {
   }
   else {
     hasBrowsedMostContent = false;
-    document.getElementById("drawer").classList.toggle("aloft");
+    document.getElementById("drawer").classList.remove("aloft");
 
     wrapper[1].firstElementChild.style.setProperty("display","revert","important");
     wrapper[1].firstElementChild.style.setProperty("visiblity","visible","important");
@@ -191,7 +193,7 @@ async function fadeMenu(valU) {
     wrapper[3].firstElementChild.style.setProperty("visiblity","visible","important");
 
 
-    //await sleep(100);
+    await sleep(100);
 
     wrapper[1].firstElementChild.style.setProperty("opacity","1","important");
     wrapper[2].firstElementChild.style.setProperty("opacity","1","important");
@@ -205,7 +207,7 @@ document.getElementsByClassName("container")[3].addEventListener("scrollend", th
 
   if (!transitionStage[0] && !transitionStage[1] && !transitionStage[2]) fadeMenu(Math.min(Math.max(0,1-height),1));
   
-},200));
+},500));
 
 window.addEventListener("popstate", locate);
 
