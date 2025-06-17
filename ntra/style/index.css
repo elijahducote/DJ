@@ -79,9 +79,6 @@ main.menu {
 div.top-nav {
   display:none !important;
 }
-img.d-ev-music-image {
-  top:1em;
-}
 }
 
 /* Small */
@@ -355,23 +352,21 @@ main.newmedia {
   touch-action: none;*/
 }
 div.bgimg {
-  margin-top:0;
-  margin-bottom:0;
-  width:150%;
-  height:100%;
-  left:0;
+  width:150vw;
+  height:150vh;
   display:flex;
   justify-content:center;
   align-items:center;
   position:relative;
+  top:50%;
 }
 img.d-ev-music-image {
-  min-height:100vh;
   width: 100%;
+  height: 100%;
   display: block;
   opacity: 0.75;
   z-index: 0;
-  inset: 0;
+  inset:0;
   position: absolute;
   object-fit: cover;
   object-position: center;
@@ -379,9 +374,8 @@ img.d-ev-music-image {
   pointer-events: none;
   user-select: none;
   touch-action: none;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
+  top:-50%;
+  margin-top:-28%;
 }
 /*.filtered {
 width: 100%;
