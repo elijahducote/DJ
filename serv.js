@@ -30,6 +30,8 @@ routes = [
   "cdn",
   "go"
 ];
+
+
 app.all(cors());
 app.all(logger());
 
@@ -64,6 +66,7 @@ function isReserved (path) {
   }
   return true;
 }
+
 
 serve(app, (info) =>
 {
