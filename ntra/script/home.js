@@ -20,7 +20,7 @@ export default function Home () {
     }
   ),
   node = htm(undefined,"div",{id:"carousel"}),
-  items = Array(jsonObject.captions.length + 2)
+  items = Array(jsonObject.captions.length + 1)
   	.fill('')
   	.map((_, index) => ({
   		alt: "",
