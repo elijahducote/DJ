@@ -13,6 +13,8 @@ function getFontSizeInEm(element) {
 
 
 export default function Home () {
+  let capcount = jsonObject.captions.length;
+  if (capcount < 3) capcount = 4;
   const cta = htm(htm("Book Us","span",{class:"button-text"}),
     "button",
     {
