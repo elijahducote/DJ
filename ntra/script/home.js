@@ -22,7 +22,7 @@ export default function Home () {
     }
   ),
   node = htm(undefined,"div",{id:"carousel"}),
-  items = Array(jsonObject.captions.length)
+  items = Array(capcount)
   	.fill('')
   	.map((_, index) => ({
   		alt: "",
