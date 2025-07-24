@@ -29,7 +29,7 @@ routes = [{
   action: async () => await getRoute("playlists")
 },
 {
-  path: "requests",
+  path: "song-requests",
   action: async () => await getRoute("requests")
 },
 {
