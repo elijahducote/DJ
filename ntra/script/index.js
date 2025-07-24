@@ -12,7 +12,7 @@ pages = {
   home: document.getElementById("home"),
   booking: document.getElementById("booking"),
   playlists: document.getElementById("playlists"),
-  requests: document.getElementById("song-requests"),
+  requests: document.getElementById("requests"),
   subscribe: document.getElementById("subscribe"),
   payment: document.getElementById("payment"),
 },
