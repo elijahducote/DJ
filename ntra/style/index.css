@@ -22,6 +22,10 @@ div.container {
   background: #000;
   overflow-x:hidden !important;
 }
+a, a:active, a:link, a:visited, a:hover {
+  text-decoration:none !important;
+  color:#0FFFDB !important;
+}
 /*@media screen and (max-height:626px) and (min-width:365px) {
 div.container{
 font-size:20rem !important;

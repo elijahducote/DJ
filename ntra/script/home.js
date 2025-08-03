@@ -1,6 +1,7 @@
 import {htm} from "./utility";
 import { RoundCarousel, RoundCarouselItem } from "round-carousel-component";
 import jsonObject from "../src/important.json";
+import {Heart} from "vanjs-feather";
 
 function getFontSizeInEm(element) {
     const computedStyle = window.getComputedStyle(element);
@@ -75,7 +76,7 @@ export default function Home () {
       }
     ),*/
 
-    htm("About",
+    htm("Houston’s LoFi/Downtempo Maestro",
       "span",
       {
         class: "home-heading"
@@ -90,7 +91,7 @@ export default function Home () {
 
     ),
 
-    htm("Ev spins chill lofi, funk/soul & more…",
+    htm([htm("Ev","span",{style:"font-weight:400"}), ", a ", htm("Houston","a",{style:"font-weight:400;font-style:italic;",href:"https://en.wikipedia.org/wiki/Houston"}), htm("-based ","span",{style:"font-style:italic;"}), htm("electronic music artist","span",{style:"font-weight:400;"}), ", weaves sonic tapestries from the vibrant threads of ", htm(["Lo-Fi, chillwave, downtempo, jazz, dream pop, ambient, & electronica.",htm(undefined,"br")],"span",{style:"font-weight:400;font-style:italic"}),"Drawing from a rich palette of influences, Ev crafts immersive soundscapes that invite listeners to drift, dream, & vibe in the ",Heart({class:"icon",style:"fill:#F00;stroke:#FFF;width:1em;height:1em"}),htm(" of Texas","span",{style:"font-weight:400"})],
       "span",
       {
         class: "home-description"
