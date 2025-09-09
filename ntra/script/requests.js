@@ -51,8 +51,8 @@ export default function Requests() {
           required: false
         },
         {
-          id: "token",
-          name: "token",
+          id: "requesttoken",
+          name: "requesttoken",
           type: "hidden"
         },
         {
@@ -72,7 +72,7 @@ export default function Requests() {
         e.preventDefault();
         inputform.validate();
         if (window.rqid && inputform.isValid()) {
-          inputform.getField("token").setValue(window.rqid);
+          inputform.getField("requesttoken").setValue(window.rqid);
           e.currentTarget.submit();
         }
       });
