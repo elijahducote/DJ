@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "main": "serv.js",
   "type": "module",
   "scripts": {
@@ -34,3 +34,4 @@
     "vanjs-feather": "^0.0.5"
   }
 }
+
