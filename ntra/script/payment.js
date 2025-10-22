@@ -24,7 +24,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(customParseFormat);
-dayjs.tz.setDefault("America/Lima");
+dayjs.tz.setDefault("America/Chicago");
 
 
 let signaturePad;
@@ -106,14 +106,14 @@ paymentElement.on("change", function(e) {
 async function makePDF() {
 
   const payform = document.getElementById("payment-form"),
-  date = dayjs(payform.elements["datentime"].value, "YYYY-MM-DD HH:mm").utc().tz("America/Lima"),
+  date = dayjs(payform.elements["datentime"].value, "YYYY-MM-DD HH:mm").utc().tz("America/Chicago"),
   when = dayjs(date);
   let bal = payform.elements["stripe-amount"].value.indexOf("US$ ");
   if (!bal) ++bal;
 
   const formatted = parseFloat(payform.elements["stripe-amount"].value.substring(bal*4).split(",").join("")),
   pdfBytes = await createPDF({
-    date: dayjs().utc().tz("America/Lima").format("MM-DD-YYYY"),
+    date: dayjs().utc().tz("America/Chicago").format("MM-DD-YYYY"),
     djName: "Evan Ducote",
     clientName: payform.elements["givenname"].value || "[REDACTED]",
     eventDate: date, 
