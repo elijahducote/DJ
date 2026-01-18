@@ -44,6 +44,14 @@ export default function Booking() {
          required: true
         },
         {
+         id: "phone-number",
+         type:"tel",
+         name:"telephone",
+         label: "Phone",
+         placeholder: "+1 (000)-000-0000",
+         required: true
+        },
+        {
           id: "attachment",
           type:"file",
           name:"attachment",
