@@ -262,12 +262,10 @@ export function Header(item) {
   for (i = 3;i;--i) {
     nth = 3 - i;
     van.add(item[nth + 1],htm(socials[nth],"main",{class:`newmedia social-${entity[nth]}`,"data-index":nth}));
-    document.getElementById(entity[nth]).addEventListener("touchend",interaction);
-    document.getElementById(entity[nth]).addEventListener("click",interaction);
+    document.getElementById(entity[nth]).addEventListener("pointerdown",interaction);
   }
   item[3].innerHTML += "";
-  document.getElementById("linktree").addEventListener("touchend",interaction);
-  document.getElementById("linktree").addEventListener("click",interaction);
+  document.getElementById("linktree").addEventListener("pointerdown",interaction);
 
   const top_nav = htm(undefined,"div",{class:"top-nav"});
   van.add(img, top_nav);
