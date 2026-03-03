@@ -13,7 +13,7 @@
   "devDependencies": {
     "@hono/node-server": "^1.13.8",
     "dotenv": "^16.4.7",
-    "hono": "^4.7.4"
+    "hono": "^4.12.4"
   },
   "dependencies": {
     "@forms.js/core": "^1.1.12",
@@ -34,4 +34,3 @@
     "vanjs-feather": "^0.0.5"
   }
 }
-

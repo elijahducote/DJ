@@ -112,7 +112,7 @@ function Menu(dropdown) {
   });
 }
 
-function interaction (e) {
+/*function interaction (e) {
   const elm = e.target,
   parent = elm.parentElement,
   attr = parseInt(parent.parentElement.dataset.index),
@@ -120,7 +120,7 @@ function interaction (e) {
   if (!attr) return;
   parent.style.transform = "none";
   window.open(links[attr],"EvMusicSocials","noreferrer,noopener");
-}
+}*/
 
 export function Header(item) {
   const dendros = htm(htm(undefined,"path",{fill:"url(#gradi-lnk)",d:"m13.7 5.9 4-4.2 2.4 2.4-4.2 4h5.9v3.3h-6l4.3 4.1-2.4 2.4L12 12l-5.7 5.8-2.4-2.4 4.3-4h-6V8h6L3.9 4l2.4-2.4 4 4.2V0h3.4zm-3.4 10.3h3.4V24h-3.4z"}),"svg",{xmlns:"http://www.w3.org/2000/svg",class:"icon"});
@@ -259,13 +259,14 @@ export function Header(item) {
   
   icon.innerHTML += "";
 
+  const linklist = ["HTTPS://INSTAGRAM.COM/_DJEV_","HTTPS://WWW.YOUTUBE.COM/@DJEV-MUSIC","HTTPS://LINKTR.EE/EVDMUSIC"];
   for (i = 3;i;--i) {
     nth = 3 - i;
-    van.add(item[nth + 1],htm(socials[nth],"main",{class:`newmedia social-${entity[nth]}`,"data-index":nth}));
-    document.getElementById(entity[nth]).addEventListener("pointerdown",interaction);
+    van.add(item[nth + 1],htm(socials[nth],"a",{href:linklist[nth],class:`newmedia social-${entity[nth]}`}));
+    //document.getElementById(entity[nth]).addEventListener("pointerdown",interaction);
   }
   item[3].innerHTML += "";
-  document.getElementById("linktree").addEventListener("pointerdown",interaction);
+  //document.getElementById("linktree").addEventListener("pointerdown",interaction);
 
   const top_nav = htm(undefined,"div",{class:"top-nav"});
   van.add(img, top_nav);
