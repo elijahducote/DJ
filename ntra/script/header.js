@@ -112,15 +112,14 @@ function Menu(dropdown) {
   });
 }
 
-async function interaction (e) {
+function interaction (e) {
   const elm = e.target,
   parent = elm.parentElement,
-  attr = parent.parentElement.dataset.index,
+  attr = parseInt(parent.parentElement.dataset.index),
   links = ["HTTPS://INSTAGRAM.COM/_DJEV_","HTTPS://WWW.YOUTUBE.COM/@DJEV-MUSIC","HTTPS://LINKTR.EE/EVDMUSIC"];
   if (!attr) return;
-  await sleep(1000);
   parent.style.transform = "none";
-  window.open(links[parseInt(attr)],"EvMusicSocials","noreferrer,noopener");
+  window.open(links[attr],"EvMusicSocials","noreferrer,noopener");
 }
 
 export function Header(item) {
