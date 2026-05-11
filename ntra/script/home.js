@@ -27,7 +27,7 @@ export default function Home () {
   	.fill('')
   	.map((_, index) => ({
   		alt: "",
-  		image: `https://rawcdn.githack.com/elijahducote/DJ/${jsonObject.hash}/ntra/src/media/flyers/${index}.jpg`,
+  		image: `/cdn/media/flyers/${index}.jpg`,
   		content:decodeURI(jsonObject.captions[index])
       //content: `<div><strong>Round Carousel</strong><span>Slide number ${index + 1}</span></div>`
   }));
