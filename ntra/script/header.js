@@ -7,6 +7,9 @@ var itR8R = 0,
 isScrolling,
 isCancelled = false;
 
+const desktopBg = window.matchMedia("(min-width: 772px) and (orientation: landscape)"),
+pickBg = () => desktopBg.matches ? `./cdn/media/img/bg-desktop-16by10.png` : `./cdn/media/img/bg-mobile-9by16.png`;
+
 
 export function updateNavIcons(pathSwap) {
   let currentPath = window.location.pathname.substring(1) || "home";
@@ -272,7 +275,13 @@ export function Header(item) {
   van.add(img, top_nav);
   TopNav(top_nav);
 
-  van.add(item[4],htm("","img",{src:`./cdn/media/img/PREVIEW_SUNDOWN.png`,class:"d-ev-music-image blurry-load","data-large":`./cdn/media/img/Sunset.png`}));
+  const bgImg = htm("","img",{src:`./cdn/media/img/PREVIEW_SUNDOWN.png`,class:"d-ev-music-image blurry-load","data-large":pickBg()});
+  van.add(item[4],bgImg);
+  desktopBg.addEventListener("change",() => {
+    const url = pickBg();
+    bgImg.setAttribute("data-large",url);
+    if (!bgImg.classList.contains("blurry-load")) bgImg.src = url;
+  });
   Menu(menutab);
   return img;
 }

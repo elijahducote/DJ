@@ -356,13 +356,14 @@ main svg.spinner {
   touch-action: none;*/
 }
 div.bgimg {
-  width:150vw;
-  height:150vh;
+  width:100vw;
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   position:relative;
-  top:50%;
+  top:0;
+  margin:0;
 }
 img.d-ev-music-image {
   width: 100%;
@@ -374,12 +375,11 @@ img.d-ev-music-image {
   position: absolute;
   object-fit: cover;
   object-position: center;
-  aspect-ratio: 1 / 1;
   pointer-events: none;
   user-select: none;
   touch-action: none;
-  top:-50%;
-  margin-top:-28%;
+  top:0;
+  margin-top:0;
 }
 /*.filtered {
 width: 100%;
