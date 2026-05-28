@@ -8,7 +8,7 @@ isScrolling,
 isCancelled = false;
 
 const desktopBg = window.matchMedia("(min-width: 772px) and (orientation: landscape)"),
-pickBg = () => desktopBg.matches ? `./cdn/media/img/bg-desktop-16by10.png` : `./cdn/media/img/bg-mobile-9by16.png`;
+pickBg = () => desktopBg.matches ? `./cdn/media/img/bg-desktop.png` : `./cdn/media/img/bg-mobile.png`;
 
 
 export function updateNavIcons(pathSwap) {
