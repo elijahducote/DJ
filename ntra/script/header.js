@@ -275,7 +275,7 @@ export function Header(item) {
   van.add(img, top_nav);
   TopNav(top_nav);
 
-  const bgImg = htm("","img",{src:`./cdn/media/img/PREVIEW_SUNDOWN.png`,class:"d-ev-music-image blurry-load","data-large":pickBg()});
+  const bgImg = htm("","img",{src:`./cdn/media/img/PREVIEW.png`,class:"d-ev-music-image blurry-load","data-large":pickBg()});
   van.add(item[4],bgImg);
   desktopBg.addEventListener("change",() => {
     const url = pickBg();
