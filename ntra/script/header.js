@@ -13,7 +13,7 @@ pickBg = () => desktopBg.matches ? `./cdn/media/img/bg-desktop.png` : `./cdn/med
 
 export function updateNavIcons(pathSwap) {
   let currentPath = window.location.pathname.substring(1) || "home";
-  const navIcons = document.querySelectorAll("h2.nav-top-section .letter-icon");
+  const navIcons = document.querySelectorAll("h2 .letter-icon");
 
   if (pathSwap) currentPath = pathSwap;
   
@@ -22,44 +22,33 @@ export function updateNavIcons(pathSwap) {
     dataLink = parentSection.dataset.link || "/",
     normalizedLink = dataLink === "/" ? "home" : dataLink;
     if (normalizedLink === currentPath) {
-      icon.style.opacity = "1.0"; // Active icon
-      icon.style.filter = "grayscale(0%)"; // Full color
+      icon.style.opacity = "1";
+      icon.style.filter = "brightness(0) saturate(100%) invert(84%) sepia(100%) saturate(1000%) hue-rotate(0deg)";
+      parentSection.style.color = "yellow";
     } else {
-      icon.style.opacity = "0.5"; // Inactive icon
-      icon.style.filter = "grayscale(100%)"; // Greyed out
+      icon.style.opacity = parentSection.classList.contains("nav-top-section") ? "0.5" : "1";
+      icon.style.filter = "grayscale(100%)";
+      parentSection.style.color = "";
     }
   });
 }
 
 function TopNav(nav) {
   itR8R = 0;
-  const iconname = ["HOME","BOOK","NOTE","MERCH","SERVICE"];
-  return list(nav,reactive(["ome", "ooking","laylists","erch","ervice"]),function (v) {
+  const iconname = ["HOME","BOOK","NOTE","SERVICE","MUSIC"];
+  return list(nav,reactive(["ome", "ooking","laylists","ervice","usic"]),function (v) {
     let offset = ".75em";
     if (!itR8R) offset = "0";
-    let path = ["/","booking","playlists","merch","payment"][itR8R],
+    let path = ["/","booking","playlists","payment","music"][itR8R],
     section = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section","data-link":path, style:`user-select: none;`});
-    if (itR8R === 3) {
-      let a = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section","data-link":"merch"});
-      
-      a.addEventListener("touchend",() => {
-        updateNavIcons("merch");
-        window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener")
-      });
-      a.addEventListener("click",() => {
-        updateNavIcons("merch");
-        window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener")
-      });
-
-      //van.add(contents,htm(undefined,"br"));
-      ++itR8R;
-      return a;
-    }
     section.addEventListener("click", function() {
       if (window.isNavigating) return;
-      //exit.dispatchEvent(window.docContact);
-      if (this.dataset.link.charCodeAt(0) === 47) history.pushState({ page: "home" }, "Home", "/");
-      else history.pushState({ page: this.dataset.link }, capCase(this.dataset.link), `/${this.dataset.link}`);
+      let curPath = window.location.pathname.substring(1) || "home";
+      let lnk = this.dataset.link;
+      if ((lnk === "/" ? "home" : lnk) === curPath) return;
+      if (lnk === "music") { updateNavIcons("music"); window.open("https://evwave.org","_blank","noopener,noreferrer"); return; }
+      if (lnk.charCodeAt(0) === 47) history.pushState({ page: "home" }, "Home", "/");
+      else history.pushState({ page: lnk }, capCase(lnk), `/${lnk}`);
       window.dispatchEvent(window.docState);
     });
     ++itR8R;
@@ -72,7 +61,7 @@ function TopNav(nav) {
 function Menu(dropdown) {
   itR8R = 0;
   const exit = htm("","img",{class:"exit-icon",src:"./cdn/media/img/svg/CRUX.svg"}),
-  iconname = ["HOME","BOOK","NOTE","MERCH","SERVICE"],
+  iconname = ["HOME","BOOK","NOTE","SERVICE","MUSIC"],
   contents = dropdown.firstElementChild;
   exit.addEventListener("touchend", throttle(function () {
     dropdown.addEventListener("transitionend",function(){
@@ -87,25 +76,20 @@ function Menu(dropdown) {
     dropdown.style.opacity = "0";
   },3000));
   van.add(contents,exit);
-  return list(contents,reactive(["ome", "ooking","laylists","erch","ervice"]),function (v) {
+  return list(contents,reactive(["ome", "ooking","laylists","ervice","usic"]),function (v) {
     let offset = ".75em";
     if (!itR8R) offset = "0";
-    if (itR8R === 3) {
-      let a = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{style:`margin: ${offset} 0 0;`});
-      
-      a.addEventListener("touchend",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
-      a.addEventListener("click",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
-
-      van.add(contents,htm(undefined,"br"));
-      ++itR8R;
-      return a;
-    }
-    let path = ["/","booking","playlists","merch","payment"][itR8R],
+    let path = ["/","booking","playlists","payment","music"][itR8R],
     section = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{"data-link":path, style:`margin: ${offset} 0 0; user-select: none;`});
     section.addEventListener("click", function() {
+      let curPath = window.location.pathname.substring(1) || "home";
+      let lnk = this.dataset.link;
+      if ((lnk === "/" ? "home" : lnk) === curPath) return;
       exit.dispatchEvent(window.docContact);
-      if (this.dataset.link.charCodeAt(0) === 47) history.pushState({ page: "home" }, "Home", "/");
-      else history.pushState({ page: this.dataset.link }, capCase(this.dataset.link), `/${this.dataset.link}`);
+      if (lnk === "music") { updateNavIcons("music"); window.open("https://evwave.org","_blank","noopener,noreferrer"); return; }
+      if (window.isNavigating) return;
+      if (lnk.charCodeAt(0) === 47) history.pushState({ page: "home" }, "Home", "/");
+      else history.pushState({ page: lnk }, capCase(lnk), `/${lnk}`);
       window.dispatchEvent(window.docState);
     });
     ++itR8R;
