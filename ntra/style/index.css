@@ -251,16 +251,10 @@ main svg#drawer:hover {
 }
 
 svg#instagram {
-  fill:url("#gradi-ig") !important;
-  /*padding:4.375em;*/
-  /*margin-right:75%;*/
-  /*inset:50%;*/
-  /*right:50vw;*/
   right:2.5em;
   top:4.375em;
   padding:0px;
   position:relative;
-  /*transition: transform 0.56s ease-in-out;*/
   z-index:6;
 }
 svg#instagram:hover, svg#youtube:hover, svg#linktree:hover {

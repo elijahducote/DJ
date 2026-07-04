@@ -27,7 +27,7 @@ export default function Home () {
   	.fill('')
   	.map((_, index) => ({
   		alt: "",
-  		image: `/cdn/media/flyers/${index}.jpg`,
+  		image: `/cdn/media/flyers/${index}.png`,
   		content:decodeURI(jsonObject.captions[index])
       //content: `<div><strong>Round Carousel</strong><span>Slide number ${index + 1}</span></div>`
   }));
@@ -91,7 +91,7 @@ export default function Home () {
 
     ),
 
-    htm([htm("Ev","span",{style:"font-weight:400"}), ", a ", htm("Houston","a",{style:"font-weight:400;font-style:italic;",href:"https://en.wikipedia.org/wiki/Houston"}), htm("-based ","span",{style:"font-style:italic;"}), htm("electronic music artist","span",{style:"font-weight:400;"}), ", weaves sonic tapestries from the vibrant threads of ", htm(["Lo-Fi, chillwave, downtempo, jazz, dream pop, ambient, & electronica.",htm(undefined,"br")],"span",{style:"font-weight:400;font-style:italic"}),"Drawing from a rich palette of influences, Ev crafts immersive soundscapes that invite listeners to drift, dream, & vibe in the ",Heart({class:"icon",style:"fill:#F00;stroke:#FFF;width:1em;height:1em"}),htm(" of Texas","span",{style:"font-weight:400"})],
+    htm([htm("Ev","span",{style:"font-weight:400"}), ", a ", htm("Houston","a",{style:"font-weight:400;font-style:italic;",href:"https://en.wikipedia.org/wiki/Houston"}), htm("-based ","span",{style:"font-style:italic;"}), htm("electronic music artist","span",{style:"font-weight:400;"}), ", weaves sonic tapestries from the vibrant threads of ", htm(["Lo-Fi, chillwave, downtempo, jazz, dream pop, ambient, & electronica.",htm(undefined,"br")],"span",{style:"font-weight:400;font-style:italic"}),"Drawing from a rich palette of influences, Ev crafts immersive soundscapes that invite listeners to drift, dream, & vibe in the",Heart({class:"icon",style:"fill:#F00;stroke:#FFF;width:1em;height:1em"}),htm("of Texas","span",{style:"font-weight:400"})],
       "span",
       {
         class: "home-description"

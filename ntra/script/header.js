@@ -115,12 +115,16 @@ export function Header(item) {
   dendros.setAttributeNS(null,"viewBox","0 0 24 24");
   const drawer = htm(ChevronsUp({class:"icon",id:"drawer"}),"main",{class:"menu"}),
   icon = drawer.firstElementChild,
-  img = htm(htm("","img",{src:`./cdn/media/img/WhiteLogoDJEV_small.png`,class:"blurry-load","data-large":`./cdn/media/img/WhiteLogoDJEV.png`}),"div",{class:"header-img"}),
+  img = htm(htm("","img",{src:`./cdn/media/img/LogoEV.svg`,class:"logo-ev"}),"div",{class:"header-img"}),
   menutab = item[5].parentElement,
   socials = [Instagram({class:"icon",id:"instagram"}),Youtube({class:"icon",id:"youtube",stroke:"url(#gradi-yt)"}),dendros],
   //Link({class:"icon",id:"linktree"})
   entity = ["instagram","youtube","linktree"];
-  socials[0].children[0].style.stroke = "none";
+  socials[0].children[0].setAttribute("fill", "url(#gradi-ig)");
+  socials[0].children[0].setAttribute("stroke", "none");
+  socials[0].children[1].setAttribute("fill", "none");
+  socials[0].children[1].setAttribute("stroke", "#FFFFFF");
+  socials[0].children[2].setAttribute("stroke", "#FFFFFF");
   socials[1].children[1].style.stroke = "#FFFFFF";
   
   icon.children[0].setAttributeNS(null,"pointer-events","none");
